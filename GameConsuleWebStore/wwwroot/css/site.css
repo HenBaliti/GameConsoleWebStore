@@ -1,0 +1,227 @@
+﻿* {
+    padding: 0;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    background: #fafafa;
+}
+/* Header */
+.top {
+    height: 30px;
+    background: #000;
+    display: flex;
+    justify-content: flex-end;
+}
+
+    .top img {
+        padding: 8px;
+        height: 100%;
+    }
+
+#logoxbox {
+    height: 140px;
+    position: absolute;
+    top: -55px;
+    right: 190px;
+}
+
+#logonintendo {
+    height: 38px;
+    position: absolute;
+    top: -4px;
+    right: 91px;
+}
+
+.navigation {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    padding: 15px;
+}
+
+/* Responsive */
+/* @media (max-width: 680px) {
+    .navigation {
+        flex-direction: column;
+    }
+} */
+
+#main_menu {
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+    align-items: center;
+}
+
+    #main_menu li {
+        margin-right: 20px;
+    }
+
+        #main_menu li a {
+            color: #000;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+            #main_menu li a:hover {
+                text-decoration: underline;
+            }
+
+
+/* Form Of Index - Products*/
+
+#formrow {
+    margin-top: -15px;
+    margin-bottom: -15px;
+}
+
+#NameLogIn {
+    font-size: 10px;
+    position: absolute;
+}
+
+.dropdown a {
+    color: #000;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.dropdown {
+    margin-right: -500px;
+}
+
+#UserImgConnected {
+    width: 30px;
+    height: auto;
+}
+
+.header_options a {
+    display: inline-block;
+    outline: none;
+    text-decoration: none;
+    text-align: center;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    padding: 10px 0; /* top, right, bottom, left */
+    width: 100px;
+    transition: 0.3s all linear;
+}
+
+    .header_options a:first-child {
+        color: #202020;
+        margin-right: 20px;
+    }
+
+        .header_options a:first-child:hover {
+            background: #202020;
+            padding: 10px 20px;
+            color: white;
+        }
+
+    .header_options a:last-child {
+        color: #fff;
+        background: #202020;
+    }
+
+        .header_options a:last-child:hover {
+            color: #202020;
+            background: #ffffff;
+            border: 1px solid #202020;
+        }
+
+
+.DetailPicShow {
+    width: auto;
+    height: 350px;
+}
+/* Form Style*/
+#RangePrice {
+    width: 200px;
+}
+/* Box */
+img.imgViewGameIndex {
+    width: auto;
+    height: 250px;
+    margin: 0 auto;
+}
+
+.box {
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.image {
+    text-align: center;
+}
+
+.actions {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+    .actions a {
+        margin: 0 15px;
+    }
+
+    .actions img {
+        height: 30px;
+        width: 30px;
+    }
+
+.imageContainer:hover .image img {
+    opacity: 0.3;
+}
+
+.imageContainer:hover .actions {
+    display: flex;
+}
+
+#PlusViewGameIndex {
+    width: 20px;
+    height: auto;
+}
+
+.navigation img {
+    height: 40px;
+}
+/* Carousel */
+.carousel-caption p {
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+#carouselExampleIndicators .item {
+    height: 350px;
+}
+
+/* Make .svg files in the carousel display properly in older browsers */
+.carousel-inner .item img[src$=".svg"] {
+    width: 100%;
+}
+
+
+/* QR code generator */
+#qrCode {
+    margin: 15px;
+}
+
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+    /* Hide captions */
+    .carousel-caption {
+        display: none;
+    }
+}

@@ -1,0 +1,61 @@
+﻿@model GameConsuleWebStore.Models.Product
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details - @Html.DisplayFor(model => model.Name)</h2>
+<hr />
+
+<div class="DetailGameShow">
+
+    <dl class="dl-horizontal col-md-7">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ReleaseDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ReleaseDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StockUnit)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StockUnit)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ConsoleType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ConsoleType)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StoreLocation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StoreLocation)
+        </dd>
+        <dt></dt>
+        <dd>
+            <div>
+                <a asp-action="Index">Back to List</a>
+            </div>
+        </dd>
+    </dl>
+    <dl class="col-md-5">
+        <dd>
+            <img class="DetailPicShow" src="~/images/@Html.DisplayFor(model => model.pathPicture)" />
+        </dd>
+    </dl>
+</div>

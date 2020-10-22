@@ -1,0 +1,129 @@
+﻿@model IEnumerable<GameConsuleWebStore.Models.Product>
+@using Microsoft.AspNetCore.Http
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="row"><ul></ul></div>
+<div class="row"><ul></ul></div>
+
+<form asp-action="SearchByConsoleType">
+    <div class="row">
+        <div class="col-md-3">
+            <p><b>Filter By Console Type:</b></p>
+            <select name="TypeConsoleSelect" id="ConsoleSelect">
+                <option value="">--Choose--</option>
+                <option value="PS2">PS2</option>
+                <option value="PS3">PS3</option>
+                <option value="PS4">PS4</option>
+                <option value="Nintendo">Nintendo</option>
+                <option value="XBOX">XBOX</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <p><b>Filter By Range Price:</b></p>
+            <div class="d-flex justify-content-center my-4">
+                <input id="RangePrice" class="border-0" type="range" min="0" max="@ViewBag.MaxPrice" />
+                <span class="font-weight-bold text-primary ml-2 mt-1 valueSpan" id="FilterByPrice"></span>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <p><b>Filter By Realease Year:</b></p>
+            <select name="YearSelect" id="YearRealeaseSelect">
+                <option value="">--Choose--</option>
+                <option value="2010">2010</option>
+                <option value="2011">2011</option>
+                <option value="2012">2012</option>
+                <option value="2013">2013</option>
+                <option value="2014">2014</option>
+                <option value="2015">2015</option>
+                <option value="2016">2016</option>
+                <option value="2017">2017</option>
+                <option value="2018">2018</option>
+                <option value="2019">2019</option>
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+            </select>
+        </div>
+
+
+        <div class="col-md-3">
+            <input type="submit" value="Filter" class="btn btn-default" />
+        </div>
+    </div>
+</form>
+<hr />
+
+<h2>Game Products</h2>
+
+<div class="row"><ul></ul></div>
+<div class="row"><ul></ul></div>
+
+
+@{var counter = 1; }
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4">
+            <!-- Box -->
+            <div class="box">
+                <div class="imageContainer">
+                    <div class="image">
+                        <img class="imgViewGameIndex" src="~/images/@Html.DisplayFor(model => item.pathPicture)" />
+                    </div>
+                    <div class="actions">
+                        <a asp-action="Details" asp-route-id="@item.ProductId"><img class="onPicOverViewGameIndex" src="~/images/information.svg" /></a>
+                        <a asp-controller="ShoppingCartItem" asp-action="Create" asp-route-id="@item.ProductId"><img class="onPicOverViewGameIndex" src="~/images/shopping-cart.svg" /></a>
+                        @{
+                            if (Context.Session.GetString("UserType") == "Admin")
+                            {
+                                <a asp-action="Edit" asp-route-id="@item.ProductId"><img class="onPicOverViewGameIndex" src="~/images/EditPic.svg" /></a>
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="NameAndPriceBox">
+                    <p style="text-align:center">
+                        <b>
+                            @Html.DisplayFor(model => item.Name) <b>  |  </b>
+                            @Html.DisplayFor(model => item.Price)$
+                        </b>
+                    </p>
+                </div>
+            </div>
+        </div>
+        if ((counter == ViewBag.GamesLength) && (Context.Session.GetString("UserType") == "Admin"))
+        {
+
+            <div class="col-md-4">
+                <div class="box">
+                    <div class="imageContainer">
+                        <div class="image">
+                            <a asp-controller="Products" asp-action="Create"><img class="imgViewGameIndex" src="~/images/PlusIcon.png" /></a>
+                        </div>
+                        <div class="NameAndPriceBox">
+                            <p style="text-align:center">
+                                <b>Create New Game</b>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        }
+        counter++;
+
+
+    }
+    @*IndexViewGame-Admin = adding game to db*@
+    @*<div class="col-md-4"><ul class="ulViewGameIndex"><li><img id="PlusViewGameIndex" src="~/images/plus-black-symbol.svg"></li></ul></div>*@
+
+</div>
+
+
+@section Scripts{
+    <script src="~/js/site.js"></script>
+}

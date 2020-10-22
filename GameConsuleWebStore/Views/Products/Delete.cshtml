@@ -1,0 +1,57 @@
+﻿@model GameConsuleWebStore.Models.Product
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Game</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ReleaseDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ReleaseDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StockUnit)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StockUnit)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ConsoleType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ConsoleType)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StoreLocation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StoreLocation)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ProductId" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
