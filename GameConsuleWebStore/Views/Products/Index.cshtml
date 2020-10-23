@@ -76,7 +76,7 @@
                     </div>
                     <div class="actions">
                         <a asp-action="Details" asp-route-id="@item.ProductId"><img class="onPicOverViewGameIndex" src="~/images/information.svg" /></a>
-                        <a asp-controller="ShoppingCartItem" asp-action="Create" asp-route-id="@item.ProductId"><img class="onPicOverViewGameIndex" src="~/images/shopping-cart.svg" /></a>
+                        <a asp-controller="ShoppingCart" asp-action="OrderNow" asp-route-id="@item.ProductId"><img class="onPicOverViewGameIndex" src="~/images/shopping-cart.svg" /></a>
                         @{
                             if (Context.Session.GetString("UserType") == "Admin")
                             {

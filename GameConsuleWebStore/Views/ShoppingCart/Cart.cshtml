@@ -1,0 +1,52 @@
+﻿@using Microsoft.AspNetCore.Http
+@using GameConsuleWebStore.Controllers 
+@{
+    ViewData["Title"] = "Cart";
+    double sumTotal = 0;
+    int counterItems = 0;
+}
+
+<h1>Cart</h1>
+
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            <th scope="col"> Quantity</th>
+            <th scope="col">Picture</th>
+            <th scope="col">Sub Total</th>
+            <th scope="col">Option</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (Item item in ViewBag.cart) //Context.Session.GetString("Cart")
+        {
+            counterItems++;
+            sumTotal += item.Product.Price * item.Quantity;
+            <tr>
+                <th scope="row">@counterItems</th>
+                <td>@item.Product.Name</td>
+                <td>@item.Product.Price $</td>
+                <td>@item.Quantity</td>
+                <td align="center"><img class="imgViewGameIndex" src="~/images/@Html.DisplayFor(model => item.Product.pathPicture)" style="width:auto;height:125px" /></td>
+                <td>@Math.Round((item.Product.Price * item.Quantity),2) $</td>
+                <td>@Html.ActionLink("Delete", "Delete", "ShoppingCart", new { id = item.Product.ProductId }, null)</td>
+            </tr>
+        }
+
+    <tr>
+        <td align="right" colspan="7"><b>Total: </b></td>
+        <td><b>@Math.Round((sumTotal), 2) $</b></td>
+    </tr>
+
+    </tbody>
+</table>
+
+
+<a class="btn btn-outline-success" role="button" asp-controller="Orders" asp-action="Order">Proceed To CheckOut</a>
+<a class="btn btn-outline-secondary" role="button" asp-controller="Products" asp-action="Index">Continue Shopping</a>
+<br />
