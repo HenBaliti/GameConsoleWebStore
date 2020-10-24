@@ -58,21 +58,28 @@
                 if (Context.Session.GetString("UserName") != null)
                 {
 
-                    <div style="margin-right:-300px">
-                        <img id="ShopCartImg" src="~/images/shopping-cart-of-checkered-design.svg" style="width:30px;height:auto" />
-                        <a id="ShopCartLink" asp-controller="ShoppingCart" asp-action="Index">Cart</a>
-                        @*@Html.ActionLink("Cart", "Index", "ShoppingCart")*@
-                        @{
-                            if (ViewBag.CounterCart == null)
-                            {
-                                <b>(0)</b>
+                        <div style="margin-right:-300px">
+                            <img id="ShopCartImg" src="~/images/shopping-cart-of-checkered-design.svg" style="width:30px;height:auto" />
+                            <a id="ShopCartLink" asp-controller="ShoppingCart" asp-action="Index">Cart</a>
+
+                            @{
+                                if (@Context.Session.GetString("CartNumOfItems") == null)
+                                {
+                                    <b>(0)</b>
+                                }
+                                else
+                                {
+                                    if (@Context.Session.GetString("CartNumOfItems").Equals("0"))
+                                    {
+                                        <b>(0)</b>
+                                    }
+                                    else
+                                    {
+                                        <b>(@Context.Session.GetString("CartNumOfItems"))</b>
+                                    }
+                                }
                             }
-                            else
-                            {
-                                <b>(@ViewBag.CounterCart)</b>
-                            }
-                        }
-                    </div>
+                        </div>
                     <div class="dropdown" style="margin-right:-300px">
                         <button class="btn dropdown-toggle" role="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img id="UserImgConnected" src="~/images/UserLogoConnected.png" />
@@ -92,21 +99,28 @@
                 }
                 else
                 {
-                    <div style="margin-right:-300px">
-                        <img id="ShopCartImg" src="~/images/shopping-cart-of-checkered-design.svg" style="width:30px;height:auto" />
-                        <a id="ShopCartLink" asp-controller="ShoppingCart" asp-action="Index">Cart</a>
-                        @*@Html.ActionLink("Cart", "Index", "ShoppingCart")*@
-                        @{
-                            if (ViewBag.CounterCart == null)
-                            {
-                                <b>(0)</b>
-                            }
-                            else
-                            {
-                                <b>(@ViewBag.CounterCart)</b>
-                            }
-                        }
-                    </div>
+        <div style="margin-right:-300px">
+            <img id="ShopCartImg" src="~/images/shopping-cart-of-checkered-design.svg" style="width:30px;height:auto" />
+            <a id="ShopCartLink" asp-controller="ShoppingCart" asp-action="Index">Cart</a>
+
+            @{
+                if (@Context.Session.GetString("CartNumOfItems") == null)
+                {
+                    <b>(0)</b>
+                }
+                else
+                {
+                    if (@Context.Session.GetString("CartNumOfItems").Equals("0"))
+                    {
+                        <b>(0)</b>
+                    }
+                    else
+                    {
+                        <b>(@Context.Session.GetString("CartNumOfItems"))</b>
+                    }
+                }
+            }
+        </div>
 
                     <div class="header_options">
                         <a asp-controller="Users" asp-action="Register">Sign up</a>

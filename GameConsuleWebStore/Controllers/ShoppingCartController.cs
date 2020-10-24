@@ -33,7 +33,7 @@ namespace GameConsuleWebStore.Controllers
                 ViewBag.cart = cart;
             }
             /////////////////////////////////////////////////////////////////////////////////
-            TempData["carTempData"] = ViewBag.CounterCart;
+            HttpContext.Session.SetString("CartNumOfItems", cartTemp.Count.ToString());
             return View("Cart");
         }
 
@@ -61,6 +61,7 @@ namespace GameConsuleWebStore.Controllers
             ViewBag.CounterCart = cartTemp.Count;
             /////////////////////////////////////////////////////////////////////////////////
             TempData["carTempData"] = ViewBag.CounterCart;
+            HttpContext.Session.SetString("CartNumOfItems", cartTemp.Count.ToString());
 
             return View("Cart");
         }
@@ -93,6 +94,9 @@ namespace GameConsuleWebStore.Controllers
             ViewBag.CounterCart = cartTemp.Count;
             /////////////////////////////////////////////////////////////////////////////////
             TempData["carTempData"] = ViewBag.CounterCart;
+
+            HttpContext.Session.SetString("CartNumOfItems", cartTemp.Count.ToString());
+
 
             return View("Cart");
         }
