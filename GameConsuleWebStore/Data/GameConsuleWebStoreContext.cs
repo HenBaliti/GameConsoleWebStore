@@ -28,5 +28,6 @@ namespace GameConsuleWebStore.Data
         public DbSet<GameConsuleWebStore.Models.Order> Order { get; set; }
 
         public DbSet<GameConsuleWebStore.Models.ProductOrder> ProductOrder { get; set; }
+        public DbSet<GameConsuleWebStore.Models.StoreAddress> StoreAddress { get; set; }
     }
 }
