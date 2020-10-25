@@ -13,7 +13,6 @@ namespace GameConsuleWebStore.Controllers
     public class ProductsController : Controller
     {
         private readonly GameConsuleWebStoreContext _context;
-
         public ProductsController(GameConsuleWebStoreContext context)
         {
             _context = context;
@@ -36,6 +35,19 @@ namespace GameConsuleWebStore.Controllers
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            var product2 = await _context.Product
+    .FirstOrDefaultAsync(m => m.ProductId == id);
+            var StoreNameOfCurrent = product2.StoreLocation;
+
+            var Store2 = await _context.StoreAddress
+    .FirstOrDefaultAsync(m => m.StoreName == StoreNameOfCurrent);
+
+            var LatitudeNum = Store2.Latitude;
+            var LongitudeNum = Store2.Longitude;
+
+            ViewBag.StoreMapLatitude = LatitudeNum;
+            ViewBag.StoreMapLongitude = LongitudeNum;
+
             if (id == null)
             {
                 return NotFound();

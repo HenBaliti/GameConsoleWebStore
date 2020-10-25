@@ -4,6 +4,25 @@
     ViewData["Title"] = "Details";
 }
 
+@*-------------------------------------------------------*@
+@*------------------------Google Map---------------------*@
+@*-------------------------------------------------------*@
+<style>
+    /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+    #map {
+        height: 400px;
+        width: 400px;
+    }
+
+    /* Optional: Makes the sample page fill the window. */
+</style>
+
+@*-------------------------------------------------------*@
+@*------------------------Google Map---------------------*@
+@*-------------------------------------------------------*@
+
+
 <h2>Details - @Html.DisplayFor(model => model.Name)</h2>
 <hr />
 
@@ -46,16 +65,49 @@
         <dd>
             @Html.DisplayFor(model => model.StoreLocation)
         </dd>
-        <dt></dt>
+        <dd>
+            <div id="map">
+            </div>
+        </dd>
+        <dd>
+            <img class="DetailPicShow" src="~/images/@Html.DisplayFor(model => model.pathPicture)" style=" margin-left: 700px; margin-top: -1000px;"/>
+        </dd>
         <dd>
             <div>
-                <a asp-action="Index">Back to List</a>
+                <a asp-action="Index">Back to Shop</a>
             </div>
         </dd>
     </dl>
-    <dl class="col-md-5">
-        <dd>
-            <img class="DetailPicShow" src="~/images/@Html.DisplayFor(model => model.pathPicture)" />
-        </dd>
-    </dl>
 </div>
+
+
+
+<input hidden type="text" name="LatNum" id='LatNum' value="@ViewBag.StoreMapLatitude" />
+<input hidden type="text" name="LngNum" id='LngNum' value="@ViewBag.StoreMapLongitude" />
+
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+<script>
+    let map;
+
+    function initMap() {
+
+        var LatOfProduct = parseFloat(document.getElementById('LatNum').value);
+        var LngOfProduct = parseFloat(document.getElementById('LngNum').value);
+
+        map = new google.maps.Map(document.getElementById("map"), {
+            center: { lat: LatOfProduct, lng: LngOfProduct },
+            zoom: 16,
+        });
+        // The marker, positioned at Uluru
+        const marker = new google.maps.Marker({
+            position: { lat: LatOfProduct, lng: LngOfProduct },
+            map: map,
+        });
+    }
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDF7eSXpi_XXXJAAJ7VRmCN8Ig9sBEOH7Y&callback=initMap&libraries=&v=weekly"
+        defer></script>

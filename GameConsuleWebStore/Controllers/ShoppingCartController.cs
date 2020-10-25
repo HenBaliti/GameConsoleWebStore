@@ -6,6 +6,7 @@ using GameConsuleWebStore.Data;
 using GameConsuleWebStore.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace GameConsuleWebStore.Controllers
 {
@@ -17,6 +18,15 @@ namespace GameConsuleWebStore.Controllers
         {
             this.de = de;
         }
+
+
+        //Procced To CheckOut - Redirect to order-creat with the data we need
+        public IActionResult ProcceedToCheck()
+        {
+            return RedirectToAction("Create", "Orders");
+        }
+
+
         public IActionResult Index()
         {
             List<Item> cart = cartTemp;
@@ -33,7 +43,7 @@ namespace GameConsuleWebStore.Controllers
                 ViewBag.cart = cart;
             }
             /////////////////////////////////////////////////////////////////////////////////
-            TempData["carTempData"] = ViewBag.CounterCart;
+            HttpContext.Session.SetString("CartNumOfItems", cartTemp.Count.ToString());
             return View("Cart");
         }
 
@@ -61,6 +71,7 @@ namespace GameConsuleWebStore.Controllers
             ViewBag.CounterCart = cartTemp.Count;
             /////////////////////////////////////////////////////////////////////////////////
             TempData["carTempData"] = ViewBag.CounterCart;
+            HttpContext.Session.SetString("CartNumOfItems", cartTemp.Count.ToString());
 
             return View("Cart");
         }
@@ -93,6 +104,9 @@ namespace GameConsuleWebStore.Controllers
             ViewBag.CounterCart = cartTemp.Count;
             /////////////////////////////////////////////////////////////////////////////////
             TempData["carTempData"] = ViewBag.CounterCart;
+
+            HttpContext.Session.SetString("CartNumOfItems", cartTemp.Count.ToString());
+
 
             return View("Cart");
         }
