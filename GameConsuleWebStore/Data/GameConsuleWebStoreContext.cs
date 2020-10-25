@@ -15,6 +15,7 @@ namespace GameConsuleWebStore.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //MANY TO MANY - ProductOrders
             modelBuilder.Entity<ProductOrder>().HasKey(p => new { p.ProductId, p.OrderId });
             modelBuilder.Entity<ProductOrder>().HasOne(p => p.Product).WithMany(p => p.ProductOrders).HasForeignKey(p => p.ProductId);
             modelBuilder.Entity<ProductOrder>().HasOne(p => p.Order).WithMany(p => p.ProductOrders).HasForeignKey(p => p.OrderId);

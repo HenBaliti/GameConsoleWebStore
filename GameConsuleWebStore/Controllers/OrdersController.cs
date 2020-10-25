@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GameConsuleWebStore.Data;
 using GameConsuleWebStore.Models;
+using Newtonsoft.Json;
 
 namespace GameConsuleWebStore.Controllers
 {
@@ -33,7 +34,7 @@ namespace GameConsuleWebStore.Controllers
                 return NotFound();
             }
 
-            var order = await _context.Order
+            var order = await _context.Order.Include(po => po.ProductOrders).ThenInclude(o => o.Product)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (order == null)
             {
@@ -43,23 +44,53 @@ namespace GameConsuleWebStore.Controllers
             return View(order);
         }
 
-        // GET: Orders/Create
+
+
         public IActionResult Create()
         {
+            List<Item> itt = GameConsuleWebStore.Controllers.ShoppingCartController.cartTemp;
+            List<SelectListItem> items = new List<SelectListItem>();
+
+
+            foreach (Item it in itt)
+            {
+                items.Add(new SelectListItem { Text = it.Product.Name, Value = it.Product.ProductId.ToString() ,Selected=true});
+            }
+
+            ViewBag.cartItemsData = items;
+            ViewData["ProductId"] = items;
+
+
             return View();
         }
+
+
 
         // POST: Orders/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,DateOrder")] Order order)
+        public async Task<IActionResult> Create([Bind("Id,Name,DateOrder")] Order order,int[] ProductId)
         {
             if (ModelState.IsValid)
             {
+                //Adding the "many to many" function -> The OrderCntroller Creating a new Order with many products.
+                order.ProductOrders = new List<ProductOrder>();
+                foreach(var id in ProductId){
+                    order.ProductOrders.Add(new ProductOrder() { ProductId = id, OrderId = order.Id });
+                }
+
                 _context.Add(order);
                 await _context.SaveChangesAsync();
+
+                //ERASE THE SESSION And Empty the static List cart
+                GameConsuleWebStore.Controllers.ShoppingCartController.cartTemp = new List<Item>();
+                HttpContext.Session.Remove("Cart");
+                HttpContext.Session.Remove("CartNumOfItems");
+
+
+
                 return RedirectToAction(nameof(Index));
             }
             return View(order);
