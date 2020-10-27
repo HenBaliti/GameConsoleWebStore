@@ -8,17 +8,39 @@ using Microsoft.EntityFrameworkCore;
 using GameConsuleWebStore.Data;
 using GameConsuleWebStore.Models;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
+using System.Security.Cryptography.X509Certificates;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace GameConsuleWebStore.Controllers
 {
     public class OrdersController : Controller
     {
         private readonly GameConsuleWebStoreContext _context;
+        public static Dictionary<int, int> hash1Id = new Dictionary<int, int>();
+        public static Dictionary<int, int> hash2Qty = new Dictionary<int, int>();
+
 
         public OrdersController(GameConsuleWebStoreContext context)
         {
             _context = context;
         }
+
+        public async Task<IActionResult> ShowOrders(int id)
+        {
+            List<Order> result = new List<Order>();
+            if(HttpContext.Session.GetString("UserId")!=null)
+            {
+                result = _context.Order.Where(p => p.User.Id == id).ToList();
+            }
+            else
+            {
+                return RedirectToAction("Login", "Users");
+            }
+            return View(result);
+        }
+
+
 
         // GET: Orders
         public async Task<IActionResult> Index()
@@ -29,6 +51,7 @@ namespace GameConsuleWebStore.Controllers
         // GET: Orders/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+
             if (id == null)
             {
                 return NotFound();
@@ -40,6 +63,19 @@ namespace GameConsuleWebStore.Controllers
             {
                 return NotFound();
             }
+
+
+            List<Product> ListProd = new List<Product>();
+            foreach(ProductOrder po in order.ProductOrders)
+            {
+                if (po.OrderId == id)
+                {
+                    ListProd.Add(po.Product);
+                }
+            }
+
+            ViewBag.ProductsListDetails = ListProd;
+
 
             return View(order);
         }
@@ -75,7 +111,18 @@ namespace GameConsuleWebStore.Controllers
         {
             if (ModelState.IsValid)
             {
+                //--------Connect The user to the order------
+                //MUST LOGIN FIRST
+                if(HttpContext.Session.GetString("UserId")!=null)
+                {
+                    order.User = _context.User.First(x => x.Id.ToString().Equals(HttpContext.Session.GetString("UserId")));
+                }
+                else
+                {
+                    return RedirectToAction("Login","Users");
+                }
                 //Adding the "many to many" function -> The OrderCntroller Creating a new Order with many products.
+                order.DateOrder = DateTime.Now;
                 order.ProductOrders = new List<ProductOrder>();
                 foreach(var id in ProductId){
                     order.ProductOrders.Add(new ProductOrder() { ProductId = id, OrderId = order.Id });
@@ -83,6 +130,36 @@ namespace GameConsuleWebStore.Controllers
 
                 _context.Add(order);
                 await _context.SaveChangesAsync();
+
+
+                /////////////////////////////////////////////////////////////
+                ////////////CART TO VIEW ORDERS/////////////////////////////////////
+                //List<int> lstQty = new List<int>();
+                //List<int> lstIds = new List<int>();
+                //if (HttpContext.Session.GetString("lstQty") != null)
+                //{
+                //    // Your Session value exists - cast your Session object to the appropriate type
+                //    lstQty = HttpContext.Session.GetString("lstQty").Split(';').Select(x => Convert.ToInt32(x)).ToList();
+                //    lstIds = HttpContext.Session.GetString("lstIds").Split(';').Select(x => Convert.ToInt32(x)).ToList();
+                //    // Use your list here
+                //}
+
+                //foreach (int x in lstIds)
+                //{
+                //    hash1Id.Add(order.Id, x);
+                //}
+                //foreach (int x in lstQty)
+                //{
+                //    hash2Qty.Add(order.Id, x);
+                //}
+
+
+                //-----Connect the hashs to the userID and then we will know the qty and the products.
+
+                /////////////////////////////////////////////////////////////
+                ////////////CART TO VIEW ORDERS/////////////////////////////////////
+                /////////////////////////////////////////////////////////////
+
 
                 //ERASE THE SESSION And Empty the static List cart
                 GameConsuleWebStore.Controllers.ShoppingCartController.cartTemp = new List<Item>();

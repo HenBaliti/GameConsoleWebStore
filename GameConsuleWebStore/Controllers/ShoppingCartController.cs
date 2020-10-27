@@ -23,6 +23,22 @@ namespace GameConsuleWebStore.Controllers
         //Procced To CheckOut - Redirect to order-creat with the data we need
         public IActionResult ProcceedToCheck()
         {
+            List<int> lstQty = new List<int>();
+            List<int> lstId = new List<int>();
+            int idProduct, qtyProduct;
+            foreach (Item it in cartTemp)
+            {
+                idProduct = it.Product.ProductId;
+                qtyProduct = it.Quantity;
+                lstId.Add(idProduct);
+                lstQty.Add(qtyProduct);
+            }
+            var result1 = string.Join(";", lstQty.Select(x => x.ToString()).ToArray());
+            HttpContext.Session.SetString("lstQty", result1);
+            var result2 = string.Join(";", lstId.Select(x => x.ToString()).ToArray());
+            HttpContext.Session.SetString("lstIds", result2);
+
+
             return RedirectToAction("Create", "Orders");
         }
 
