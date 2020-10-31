@@ -84,16 +84,22 @@ namespace GameConsuleWebStore.Controllers
             List<SelectListItem> items = new List<SelectListItem>();
 
             ViewBag.itemsForOrder = itt;
-
+            double AmountTotal = 0;
             //Showing the prodcuts from the cart to the Order-Create-View
             foreach (Item it in itt)
             {
                 items.Add(new SelectListItem { Text = it.Product.Name, Value = it.Product.ProductId.ToString(), Selected = true });
+                //View-Total-Amount-for order
+                AmountTotal += it.Quantity * it.Product.Price;
             }
 
             ViewBag.cartItemsData = items;
             ViewData["ProductId"] = items;
 
+            ViewBag.TotalAmountForOrder = AmountTotal;
+            ViewBag.DateYearCurrently = DateTime.Today.Year;
+            ViewBag.DateMonthCurrently = DateTime.Today.Month;
+            ViewBag.DateDayCurrently = DateTime.Today.Day;
 
             return View();
         }
@@ -122,6 +128,7 @@ namespace GameConsuleWebStore.Controllers
                 }
                 //Adding the "many to many" function -> The OrderCntroller Creating a new Order with many products.
                 order.DateOrder = DateTime.Now;
+
                 order.ProductOrders = new List<ProductOrder>();
                 foreach(var id in ProductId){
                     order.ProductOrders.Add(new ProductOrder() { ProductId = id, OrderId = order.Id });
@@ -141,8 +148,7 @@ namespace GameConsuleWebStore.Controllers
                 HttpContext.Session.Remove("CartNumOfItems");
 
 
-
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", new { id = order.Id });
             }
             return View(order);
         }
