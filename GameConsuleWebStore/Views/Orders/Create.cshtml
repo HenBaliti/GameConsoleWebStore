@@ -1,4 +1,7 @@
 ﻿@model GameConsuleWebStore.Models.Order
+@using GameConsuleWebStore.Controllers
+@using Microsoft.AspNetCore.Http
+
 
 @{
     ViewData["Title"] = "Create";
@@ -14,45 +17,57 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+                <input asp-for="Name" class="form-control" value="@Context.Session.GetString("UserName")@Context.Session.GetString("UserId")" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="DateOrder" class="control-label"></label>
-                <input asp-for="DateOrder" class="form-control" />
-                <span asp-validation-for="DateOrder" class="text-danger"></span>
-            </div>
+
 
             <div class="form-group">
-                <label for="ProductId" class="control-label"></label>
-                <select name="ProductId" class="form-control" asp-items="ViewBag.ProductId" multiple></select>
+                <label for="ProductId" class="control-label" hidden></label>
+                <select name="ProductId" class="form-control" asp-items="ViewBag.ProductId" multiple hidden></select>
             </div>
 
-
-            @*<div class="form-group">
-            <label for="ProductId" class="control-label"></label>
-
-            <select name="ProductId" class="form-control" asp-items="ViewBag.ProductId" multiple></select>
-                            @using (Html.BeginForm("Create", "Orders", FormMethod.Get))
-            {
-
-        <fieldset>
-            @Html.DropDownList("cartItemsData")
-
-        </fieldset>
-
-            }
-
-        </div>*@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
+<div class="row"><b>Products You Choose:</b></div>
+<div class="row">
+    @foreach (Item item in ViewBag.itemsForOrder)
+    {
+        <div class="col-md-4">
+            <!-- Box -->
+            <div class="box">
+                <div class="imageContainer">
+                    <div class="image">
+                        <img class="imgViewGameIndex" src="~/images/@Html.DisplayFor(model => item.Product.pathPicture)" />
+                    </div>
+                    <div class="actions">
+                        <a asp-action="Details" asp-controller="Products" asp-route-id="@item.Product.ProductId"><img class="onPicOverViewGameIndex" src="~/images/information.svg" /></a>
+                    </div>
+                </div>
+                <div class="NameAndPriceBox">
+                    <p style="text-align:center">
+                        <b>
+                            @Html.DisplayFor(model => item.Product.Name) <b>  |  </b>
+                            @Html.DisplayFor(model => item.Product.Price)$
+                        </b>
+                    </p>
+                    <p style="text-align:center">
+                        <b>
+                            Qty: @Html.DisplayFor(model => item.Quantity)
+                        </b>
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" asp-controller="ShoppingCart">Back to Shopping Cart</a>
 </div>
 
 @section Scripts {

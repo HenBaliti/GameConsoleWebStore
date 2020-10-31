@@ -1,4 +1,6 @@
 ﻿@model GameConsuleWebStore.Models.Order
+@using GameConsuleWebStore.Controllers 
+@using Microsoft.AspNetCore.Http
 
 @{
     ViewData["Title"] = "Details";
@@ -26,33 +28,44 @@
 
     <dl>
         <dd class="col-sm-12">
-            <b>Product You Have Ordered : </b> 
+            <b>Product You Have Ordered : </b>
         </dd>
     </dl>
-    <div class="row">
-        @foreach (var item in Model.ProductOrders)
-        {
-            <a asp-controller="Products" asp-action="Details" asp-route-id="@item.Product.ProductId">
-                <div class="col-md-4">
-                    <!-- Box -->
-                    <div class="box">
-                        <div class="imageContainer">
-                            <div class="image">
-                                <img class="imgViewGameIndex" src="~/images/@Html.DisplayFor(model => item.Product.pathPicture)" />
-                            </div>
-                        </div>
-                                    @Html.DisplayFor(model => item.Product.Name) <b>  |  </b>
-                                    @Html.DisplayFor(model => item.Product.Price)$
 
+    <div class="row">
+        @foreach (Item item in ViewBag.ListOfItemsPerOrderID)
+        {
+            <div class="col-md-4">
+                <!-- Box -->
+                <div class="box">
+                    <div class="imageContainer">
+                        <div class="image">
+                            <img class="imgViewGameIndex" src="~/images/@Html.DisplayFor(model => item.Product.pathPicture)" />
+                        </div>
+                        <div class="actions">
+                            <a asp-action="Details" asp-controller="Products" asp-route-id="@item.Product.ProductId"><img class="onPicOverViewGameIndex" src="~/images/information.svg" /></a>
+                        </div>
+                    </div>
+                    <div class="NameAndPriceBox">
+                        <p style="text-align:center">
+                            <b>
+                                @Html.DisplayFor(model => item.Product.Name) <b>  |  </b>
+                                @Html.DisplayFor(model => item.Product.Price)$
+                            </b>
+                        </p>
+                        <p style="text-align:center">
+                            <b>Qty: @Html.DisplayFor(model => item.Quantity)
+                            </b>
+                        </p>
                     </div>
                 </div>
-                </a>
-                }
+            </div>
+        }
+    </div>
 
-        </div>
+
+
+
+
 
 </div>
-@*<div>
-        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-        <a asp-action="Index">Back to List</a>
-    </div>*@

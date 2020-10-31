@@ -61,6 +61,8 @@ namespace GameConsuleWebStore.Controllers
 
         //-------------------------------------------------------------------------------------------------
 
+
+
         //Register
         public IActionResult Register()
         {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameConsuleWebStore.Controllers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,5 +17,6 @@ namespace GameConsuleWebStore.Models
         public User User { get; set; }
 
         public ICollection<ProductOrder> ProductOrders { get; set; }
+        public ICollection<Item> ItemsPerOrder { get; set; }
     }
 }

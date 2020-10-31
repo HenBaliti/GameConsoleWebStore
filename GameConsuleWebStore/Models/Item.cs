@@ -22,7 +22,9 @@ namespace GameConsuleWebStore.Controllers
             this.quantity = quantity;
         }
 
+        public int ItemId { get; set; }
         public Product Product { get => product; set => product = value; }
         public int Quantity { get => quantity; set => quantity = value; }
+        public Order Order { get; set; }
     }
 }
