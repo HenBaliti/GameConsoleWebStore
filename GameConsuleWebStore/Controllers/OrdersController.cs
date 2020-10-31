@@ -17,8 +17,6 @@ namespace GameConsuleWebStore.Controllers
     public class OrdersController : Controller
     {
         private readonly GameConsuleWebStoreContext _context;
-        public static Dictionary<int, int> hash1Id = new Dictionary<int, int>();
-        public static Dictionary<int, int> hash2Qty = new Dictionary<int, int>();
 
 
         public OrdersController(GameConsuleWebStoreContext context)
@@ -52,29 +50,27 @@ namespace GameConsuleWebStore.Controllers
         public async Task<IActionResult> Details(int? id)
         {
 
+
             if (id == null)
             {
                 return NotFound();
             }
 
-            var order = await _context.Order.Include(po => po.ProductOrders).ThenInclude(o => o.Product)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            //Taking the order with all includes -> ProductOrders+ Product + Items for Order
+            var order = await _context.Order.Include(po => po.ProductOrders).Include(po => po.ItemsPerOrder).ThenInclude(o => o.Product).FirstOrDefaultAsync(m => m.Id == id);
             if (order == null)
             {
                 return NotFound();
             }
 
-
-            List<Product> ListProd = new List<Product>();
-            foreach(ProductOrder po in order.ProductOrders)
+            //Taking the items per order for the view
+            List<Item> ListOfItemsPerOrder = new List<Item>();
+            foreach (Item t in order.ItemsPerOrder)
             {
-                if (po.OrderId == id)
-                {
-                    ListProd.Add(po.Product);
-                }
+                ListOfItemsPerOrder.Add(t);
             }
+            ViewBag.ListOfItemsPerOrderID = ListOfItemsPerOrder;
 
-            ViewBag.ProductsListDetails = ListProd;
 
 
             return View(order);
@@ -87,10 +83,12 @@ namespace GameConsuleWebStore.Controllers
             List<Item> itt = GameConsuleWebStore.Controllers.ShoppingCartController.cartTemp;
             List<SelectListItem> items = new List<SelectListItem>();
 
+            ViewBag.itemsForOrder = itt;
 
+            //Showing the prodcuts from the cart to the Order-Create-View
             foreach (Item it in itt)
             {
-                items.Add(new SelectListItem { Text = it.Product.Name, Value = it.Product.ProductId.ToString() ,Selected=true});
+                items.Add(new SelectListItem { Text = it.Product.Name, Value = it.Product.ProductId.ToString(), Selected = true });
             }
 
             ViewBag.cartItemsData = items;
@@ -109,6 +107,7 @@ namespace GameConsuleWebStore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,DateOrder")] Order order,int[] ProductId)
         {
+
             if (ModelState.IsValid)
             {
                 //--------Connect The user to the order------
@@ -131,35 +130,10 @@ namespace GameConsuleWebStore.Controllers
                 _context.Add(order);
                 await _context.SaveChangesAsync();
 
+                List<Item> itt = GameConsuleWebStore.Controllers.ShoppingCartController.cartTemp;
 
-                /////////////////////////////////////////////////////////////
-                ////////////CART TO VIEW ORDERS/////////////////////////////////////
-                //List<int> lstQty = new List<int>();
-                //List<int> lstIds = new List<int>();
-                //if (HttpContext.Session.GetString("lstQty") != null)
-                //{
-                //    // Your Session value exists - cast your Session object to the appropriate type
-                //    lstQty = HttpContext.Session.GetString("lstQty").Split(';').Select(x => Convert.ToInt32(x)).ToList();
-                //    lstIds = HttpContext.Session.GetString("lstIds").Split(';').Select(x => Convert.ToInt32(x)).ToList();
-                //    // Use your list here
-                //}
-
-                //foreach (int x in lstIds)
-                //{
-                //    hash1Id.Add(order.Id, x);
-                //}
-                //foreach (int x in lstQty)
-                //{
-                //    hash2Qty.Add(order.Id, x);
-                //}
-
-
-                //-----Connect the hashs to the userID and then we will know the qty and the products.
-
-                /////////////////////////////////////////////////////////////
-                ////////////CART TO VIEW ORDERS/////////////////////////////////////
-                /////////////////////////////////////////////////////////////
-
+                order.ItemsPerOrder = itt;
+                await _context.SaveChangesAsync();
 
                 //ERASE THE SESSION And Empty the static List cart
                 GameConsuleWebStore.Controllers.ShoppingCartController.cartTemp = new List<Item>();

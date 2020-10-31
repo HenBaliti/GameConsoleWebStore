@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using GameConsuleWebStore.Models;
+using GameConsuleWebStore.Controllers;
 
 namespace GameConsuleWebStore.Data
 {
@@ -30,5 +31,6 @@ namespace GameConsuleWebStore.Data
 
         public DbSet<GameConsuleWebStore.Models.ProductOrder> ProductOrder { get; set; }
         public DbSet<GameConsuleWebStore.Models.StoreAddress> StoreAddress { get; set; }
+        public DbSet<GameConsuleWebStore.Controllers.Item> Item { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿@model GameConsuleWebStore.Models.Order
+@using GameConsuleWebStore.Controllers 
 @using Microsoft.AspNetCore.Http
 
 @{
@@ -32,24 +33,28 @@
     </dl>
 
     <div class="row">
-        @foreach (Product item in ViewBag.ProductsListDetails)
+        @foreach (Item item in ViewBag.ListOfItemsPerOrderID)
         {
             <div class="col-md-4">
                 <!-- Box -->
                 <div class="box">
                     <div class="imageContainer">
                         <div class="image">
-                            <img class="imgViewGameIndex" src="~/images/@Html.DisplayFor(model => item.pathPicture)" />
+                            <img class="imgViewGameIndex" src="~/images/@Html.DisplayFor(model => item.Product.pathPicture)" />
                         </div>
                         <div class="actions">
-                            <a asp-action="Details" asp-controller="Products" asp-route-id="@item.ProductId"><img class="onPicOverViewGameIndex" src="~/images/information.svg" /></a>
+                            <a asp-action="Details" asp-controller="Products" asp-route-id="@item.Product.ProductId"><img class="onPicOverViewGameIndex" src="~/images/information.svg" /></a>
                         </div>
                     </div>
                     <div class="NameAndPriceBox">
                         <p style="text-align:center">
                             <b>
-                                @Html.DisplayFor(model => item.Name) <b>  |  </b>
-                                @Html.DisplayFor(model => item.Price)$
+                                @Html.DisplayFor(model => item.Product.Name) <b>  |  </b>
+                                @Html.DisplayFor(model => item.Product.Price)$
+                            </b>
+                        </p>
+                        <p style="text-align:center">
+                            <b>Qty: @Html.DisplayFor(model => item.Quantity)
                             </b>
                         </p>
                     </div>
@@ -64,7 +69,3 @@
 
 
 </div>
-@*<div>
-        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-        <a asp-action="Index">Back to List</a>
-    </div>*@

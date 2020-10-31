@@ -4,14 +4,16 @@ using GameConsuleWebStore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GameConsuleWebStore.Migrations
 {
     [DbContext(typeof(GameConsuleWebStoreContext))]
-    partial class GameConsuleWebStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20201030225814_Item-Orders")]
+    partial class ItemOrders
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
