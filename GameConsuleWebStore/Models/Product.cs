@@ -18,6 +18,7 @@ namespace GameConsuleWebStore.Models
 
         public String pathPicture { get; set; }
 
+        public String Category { get; set; }
         public String ConsoleType { get; set; }
 
         public String StoreLocation { get; set; }

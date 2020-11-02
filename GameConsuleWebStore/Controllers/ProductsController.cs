@@ -74,7 +74,7 @@ namespace GameConsuleWebStore.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductId,Name,ReleaseDate,Price,StockUnit,pathPicture,ConsoleType,StoreLocation")] Product product)
+        public async Task<IActionResult> Create([Bind("ProductId,Name,ReleaseDate,Price,StockUnit,pathPicture,ConsoleType,Category,StoreLocation")] Product product)
         {
             if (ModelState.IsValid)
             {
@@ -106,7 +106,7 @@ namespace GameConsuleWebStore.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductId,Name,ReleaseDate,Price,StockUnit,pathPicture,ConsoleType,StoreLocation")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("ProductId,Name,ReleaseDate,Price,StockUnit,pathPicture,ConsoleType,Category,StoreLocation")] Product product)
         {
             if (id != product.ProductId)
             {
@@ -169,5 +169,59 @@ namespace GameConsuleWebStore.Controllers
         {
             return _context.Product.Any(e => e.ProductId == id);
         }
+        public async Task<IActionResult> SearchByConsoleType(string TypeConsoleSelect, string FilterByPrice, String TypeCategorySelect)
+        {
+            IQueryable<Product> products = _context.Product;
+            IQueryable<Product> products1 = _context.Product;
+            //only console selection
+            if (TypeConsoleSelect != null && int.Parse(FilterByPrice) == 0 && TypeCategorySelect == null)
+            {
+                products1 = products.Where(p => p.ConsoleType.Contains(TypeConsoleSelect));
+                return View("Index", await products1.ToListAsync());
+            }
+            //console + year selection
+            if (TypeConsoleSelect != null && int.Parse(FilterByPrice) == 0 && TypeCategorySelect != null)
+            {
+                products1 = products.Where(p => p.ConsoleType.Contains(TypeConsoleSelect)).Where(p => p.Category == TypeCategorySelect);
+                return View("Index", await products1.ToListAsync());
+            }
+            //console + price selection
+            if (TypeConsoleSelect != null && int.Parse(FilterByPrice) != 0 && TypeCategorySelect == null)
+            {
+                products1 = products.Where(p => p.ConsoleType.Contains(TypeConsoleSelect)).Where(p => p.Price <= int.Parse(FilterByPrice)); ;
+                return View("Index", await products1.ToListAsync());
+            }
+
+            //3 together
+            if (TypeConsoleSelect != null && int.Parse(FilterByPrice) != 0 && TypeCategorySelect != null)
+            {
+                products1 = products.Where(p => p.ConsoleType.Contains(TypeConsoleSelect)).Where(p => p.Category == TypeCategorySelect).Where(p => p.Price <= int.Parse(FilterByPrice)); ;
+                return View("Index", await products1.ToListAsync());
+            }
+            //only year selection
+            if (TypeConsoleSelect == null && int.Parse(FilterByPrice) == 0 && TypeCategorySelect != null)
+            {
+                products1 = products.Where(p => p.Category == TypeCategorySelect);
+                return View("Index", await products1.ToListAsync());
+            }
+            //year + price
+            if (TypeConsoleSelect == null && int.Parse(FilterByPrice) != 0 && TypeCategorySelect != null)
+            {
+                products = products1.Where(p => p.Category == TypeCategorySelect).Where(p => p.Price <= int.Parse(FilterByPrice)); ;
+                return View("Index", await products1.ToListAsync());
+            }
+
+            //only price select
+            if (TypeConsoleSelect == null && int.Parse(FilterByPrice) != 0 && TypeCategorySelect == null)
+            {
+                products1 = products.Where(p => p.Price <= int.Parse(FilterByPrice));
+                return View("Index", await products1.ToListAsync());
+            }
+            //nothing select - show all
+            //if (TypeConsoleSelect == null && FilterByPrice == null && YearRealeaseSelect == 0)
+            //    return View("Index", await products.ToListAsync());
+            return View("Index", await products.ToListAsync());
+        }
+
     }
 }
