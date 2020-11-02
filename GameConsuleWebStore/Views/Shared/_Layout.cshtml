@@ -13,19 +13,37 @@
     <header>
         @*------ Nav Bar --------*@
         <div class="top">
-            <img src="~/images/logo.svg" alt="logo">
+            <img src="~/images/psLogo.png" alt="logo" id="logops">
             <img src="~/images/Xbox_logo_(2019).png" alt="logo" id="logoxbox">
             <img src="~/images/Nintendo_red_logo.png" alt="logo" id="logonintendo">
+            <img src="~/images/wii.png" alt="logo" id="logonwiiu">
         </div>
-        <div class="navigation">
-            <nav>
-                <ul id="main_menu">
-                    <li><img src="~/images/psLogo.png"></li>
-                    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-controller="Products" asp-action="Index">Products</a></li>
-                    <li><a asp-controller="Orders" asp-action="ShowOrders"  asp-route-id="@Context.Session.GetString("UserId")">Orders</a></li>
+
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a asp-controller="Home" asp-action="Index"><img src="~/images/logo.png" id="logonav" width="65" height="45" /> </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto" style="margin:5px">
+                    <li class=" nav-item active">
+                        <a class="nav-link" asp-controller="Home" asp-action="Index">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"  asp-controller="Products" asp-action="Index" tabindex="-1" aria-disabled="true">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Orders</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="#" tabindex="-1" aria-disabled="true">Statistics</a>
+                    </li>
+
+
                     @*<li><a asp-controller="ShoppingCarts" asp-action="Index">Shop</a></li>*@
-                    <li><a href="#">Statistics</a></li>
+
                     @{
                         if (Context.Session.GetString("UserType") == "Admin")
                         {
@@ -50,15 +68,14 @@
                         {
 
                         }
+
                     }
                 </ul>
-            </nav>
+                @{
+                    if (Context.Session.GetString("UserName") != null)
+                    {
 
-            @{
-                if (Context.Session.GetString("UserName") != null)
-                {
-
-                        <div style="margin-right:-300px">
+                        <div style="margin-right:320px">
                             <img id="ShopCartImg" src="~/images/shopping-cart-of-checkered-design.svg" style="width:30px;height:auto" />
                             <a id="ShopCartLink" asp-controller="ShoppingCart" asp-action="Index">Cart</a>
 
@@ -80,57 +97,61 @@
                                 }
                             }
                         </div>
-                    <div class="dropdown" style="margin-right:-300px">
-                        <button class="btn dropdown-toggle" role="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img id="UserImgConnected" src="~/images/UserLogoConnected.png" />
-                            <b>@Context.Session.GetString("UserName")</b>
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" asp-controller="Users" asp-action="Edit" asp-route-id="@Context.Session.GetString("UserId")">Edit User Details</a>
-                            <hr />
-                            <a class="dropdown-item" asp-controller="Orders" asp-action="ShowOrders" asp-route-id="@Context.Session.GetString("UserId")">My Order's</a>
-                            <hr />
-                            <a class="dropdown-item" asp-controller="Users" asp-action="LogOut">Log Out</a>
+                        <div class="dropdown" style="margin-right:350px">
+                            <button class="btn dropdown-toggle" role="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img id="UserImgConnected" src="~/images/UserLogoConnected.png" />
+                                <b>@Context.Session.GetString("UserName")</b>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" asp-controller="Users" asp-action="Edit" asp-route-id="@Context.Session.GetString("UserId")">Edit User Details</a>
+                                <hr />
+                                <a class="dropdown-item" asp-controller="Orders" asp-action="Details" asp-route-id="@Context.Session.GetString("UserId")">My Order's</a>
+                                <hr />
+                                <a class="dropdown-item" asp-controller="Users" asp-action="LogOut">Log Out</a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="header_options">
-                        <a asp-controller="Users" asp-action="LogOut">Log Out</a>
-                    </div>
-                }
-                else
-                {
-        <div style="margin-right:-300px">
-            <img id="ShopCartImg" src="~/images/shopping-cart-of-checkered-design.svg" style="width:30px;height:auto" />
-            <a id="ShopCartLink" asp-controller="ShoppingCart" asp-action="Index">Cart</a>
-
-            @{
-                if (@Context.Session.GetString("CartNumOfItems") == null)
-                {
-                    <b>(0)</b>
-                }
-                else
-                {
-                    if (@Context.Session.GetString("CartNumOfItems").Equals("0"))
-                    {
-                        <b>(0)</b>
+                        <div class="header_options">
+                            <a asp-controller="Users" asp-action="LogOut">Log Out</a>
+                        </div>
                     }
                     else
                     {
-                        <b>(@Context.Session.GetString("CartNumOfItems"))</b>
+                        @*<div s">
+                                <img id="ShopCartImg" src="~/images/shopping-cart-of-checkered-design.svg" style="width:30px;height:auto" />
+                                <a id="ShopCartLink" asp-controller="ShoppingCart" asp-action="Index">Cart</a>
+
+                                @{
+                                    if (@Context.Session.GetString("CartNumOfItems") == null)
+                                    {
+                                        <b>(0)</b>
+                                    }
+                                    else
+                                    {
+                                        if (@Context.Session.GetString("CartNumOfItems").Equals("0"))
+                                        {
+                                            <b>(0)</b>
+                                        }
+                                        else
+                                        {
+                                            <b>(@Context.Session.GetString("CartNumOfItems"))</b>
+                                        }
+                                    }
+                                }
+                            </div>*@
+
+                        <div class="header_options">
+                            <a asp-controller="Users" asp-action="Register">Sign up</a>
+                            <a asp-controller="Users" asp-action="Login">Login</a>
+                        </div>
                     }
                 }
-            }
-        </div>
 
-                    <div class="header_options">
-                        <a asp-controller="Users" asp-action="Register">Sign up</a>
-                        <a asp-controller="Users" asp-action="Login">Login</a>
-                    </div>
-                }
-            }
+            </div>
+        </nav>
 
 
-        </div>
+
+
 
     </header>
     <div class="container">
@@ -141,8 +162,10 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2020 - GameConsuleWebStore - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
+            <div id="gamediv">
+                &copy; 2020 - GameConsuleWebStore - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+            </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

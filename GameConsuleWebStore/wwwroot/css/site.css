@@ -21,19 +21,34 @@ body {
         height: 100%;
     }
 
+#logops {
+    height: 38px;
+    position: absolute;
+    top: -4px;
+    right: -8px;
+}
+
 #logoxbox {
     height: 140px;
     position: absolute;
     top: -55px;
-    right: 190px;
+    right: 204px;
 }
 
 #logonintendo {
     height: 38px;
     position: absolute;
     top: -4px;
-    right: 91px;
+    right: 109px;
 }
+
+#logonwiiu {
+    height: 72px;
+    position: absolute;
+    top: -21px;
+    right: 313px;
+}
+
 
 .navigation {
     display: flex;
