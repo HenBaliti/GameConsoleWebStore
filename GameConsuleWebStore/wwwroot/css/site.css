@@ -21,19 +21,34 @@ body {
         height: 100%;
     }
 
+#logops {
+    height: 38px;
+    position: absolute;
+    top: -4px;
+    right: -8px;
+}
+
 #logoxbox {
     height: 140px;
     position: absolute;
     top: -55px;
-    right: 190px;
+    right: 204px;
 }
 
 #logonintendo {
     height: 38px;
     position: absolute;
     top: -4px;
-    right: 91px;
+    right: 109px;
 }
+
+#logonwiiu {
+    height: 72px;
+    position: absolute;
+    top: -21px;
+    right: 313px;
+}
+
 
 .navigation {
     display: flex;
@@ -228,3 +243,40 @@ img.imgViewGameIndex {
         display: none;
     }
 }
+.newsletter {
+    padding: 80px 0;
+    background-image: url('/images/back.jpg');
+    background-size: cover;
+}
+
+    .newsletter .content {
+        max-width: 650px;
+        margin: 0 auto;
+        text-align: center;
+        position: relative;
+        z-index: 2;
+    }
+
+        .newsletter .content h2 {
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .newsletter .content .form-control {
+            height: 50px;
+            border-color: #ffffff;
+            border-radius: 0;
+        }
+
+            .newsletter .content.form-control:focus {
+                box-shadow: none;
+                border: 2px solid #243c4f;
+            }
+
+        .newsletter .content .btn {
+            min-height: 50px;
+            border-radius: 0;
+            background: #243c4f;
+            color: #fff;
+            font-weight: 600;
+        }
