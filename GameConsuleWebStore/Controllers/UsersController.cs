@@ -77,7 +77,7 @@ namespace GameConsuleWebStore.Controllers
                 Name = fullName,
                 Password = password,
                 Email = email,
-                UserType = "Customer"
+                UserType = "User"
             };
 
             _context.Add(user);
