@@ -4,9 +4,9 @@
 
 // Write your JavaScript code.
 
-$(document).ready(function () {
+jQuery(document).ready(function () {
 
-    const $valueSpan = $('.valueSpan');
+    const $valueSpan = $('.range-slider__value');
     const $value = $('#RangePrice');
     $valueSpan.html($value.val());
     $value.on('input change', () => {
