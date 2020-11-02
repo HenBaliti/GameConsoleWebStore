@@ -14,3 +14,25 @@ jQuery(document).ready(function () {
         $valueSpan.html($value.val());
     });
 });
+window.onload = function () {
+	var settings = {
+		"async": true,
+		"crossDomain": true,
+		"url": "https://rawg-video-games-database.p.rapidapi.com/developers",
+		"method": "GET",
+		"headers": {
+			"x-rapidapi-host": "rawg-video-games-database.p.rapidapi.com",
+			"x-rapidapi-key": "f6f05d56dcmsh4deccfd05227522p1c83efjsn04ee8a8c6cea"
+		}
+	}
+
+	$.ajax(settings).done(function (response) {
+		array = response.results;
+		console.log(response);
+		//console.log(array[0].name);
+		//var src = document.getElementById("gamediv");
+		//var img = document.createElement("img");
+		//img.src = array[0].image_background;
+		//src.appendChild(img);
+	});
+};
