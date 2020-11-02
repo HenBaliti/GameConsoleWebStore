@@ -35,10 +35,10 @@
                         <a class="nav-link"  asp-controller="Products" asp-action="Index" tabindex="-1" aria-disabled="true">Products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Orders</a>
+                        <a class="nav-link"  asp-controller="Orders" asp-action="ShowOrders"  asp-route-id="@Context.Session.GetString("UserId")" tabindex="-1" aria-disabled="true">Orders</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="#" tabindex="-1" aria-disabled="true">Statistics</a>
+                        <a class="nav-link" tabindex="-1" aria-disabled="true">Statistics</a>
                     </li>
 
 
