@@ -38,7 +38,7 @@
                         <a class="nav-link" asp-controller="Orders" asp-action="ShowOrders" asp-route-id="@Context.Session.GetString("UserId")" tabindex="-1" aria-disabled="true">Orders</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" tabindex="-1" aria-disabled="true">Statistics</a>
+                        <a class="nav-link" asp-controller="Statistics" asp-action="Index" tabindex="-1" aria-disabled="true">Statistics</a>
                     </li>
 
 
@@ -75,7 +75,7 @@
                     if (Context.Session.GetString("UserName") != null)
                     {
 
-                        <div style="margin-right:320px">
+                        <div style="">
                             <img id="ShopCartImg" src="~/images/shopping-cart-of-checkered-design.svg" style="width:30px;height:auto" />
                             <a id="ShopCartLink" asp-controller="ShoppingCart" asp-action="Index">Cart</a>
 
@@ -97,7 +97,7 @@
                                 }
                             }
                         </div>
-                        <div class="dropdown" style="margin-right:350px">
+                        <div class="dropdown" style="">
                             <button class="btn dropdown-toggle" role="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img id="UserImgConnected" src="~/images/UserLogoConnected.png" />
                                 <b>@Context.Session.GetString("UserName")</b>
