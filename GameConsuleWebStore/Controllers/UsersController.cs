@@ -255,5 +255,49 @@ namespace GameConsuleWebStore.Controllers
         {
             return _context.User.Any(e => e.Id == id);
         }
+        public async Task<IActionResult> SearchByUserType(string TypeUserSelect, string UserNamesSelect, string NamesSelect)
+        {
+            IQueryable<User> users = _context.User;
+            IQueryable<User> users1 = _context.User;
+            if (TypeUserSelect != null && UserNamesSelect==null  && NamesSelect == null)
+            {
+                users1 = users.Where(u => u.UserType.Contains(TypeUserSelect));
+                return View("Index", await users1.ToListAsync());
+            }
+            if (TypeUserSelect == null && UserNamesSelect != null && NamesSelect == null)
+            {
+                users1 = users.Where(u => u.UserName.Contains(UserNamesSelect));
+                return View("Index", await users1.ToListAsync());
+            }
+            if (TypeUserSelect == null && UserNamesSelect == null && NamesSelect != null)
+            {
+                users1 = users.Where(u => u.Name.Contains(NamesSelect));
+                return View("Index", await users1.ToListAsync());
+            }
+            if (TypeUserSelect != null && UserNamesSelect != null && NamesSelect == null)
+            {
+                users1 = users.Where(u => u.UserType.Contains(TypeUserSelect)).Where(u=>u.UserName.Contains(UserNamesSelect));
+                return View("Index", await users1.ToListAsync());
+            }
+            if (TypeUserSelect != null && UserNamesSelect == null && NamesSelect != null)
+            {
+                users1 = users.Where(u => u.UserType.Contains(TypeUserSelect)).Where(u => u.Name.Contains(NamesSelect));
+                return View("Index", await users1.ToListAsync());
+            }
+            if (TypeUserSelect == null && UserNamesSelect != null && NamesSelect != null)
+            {
+                users1 = users.Where(u => u.UserName.Contains(UserNamesSelect)).Where(u => u.Name.Contains(NamesSelect));
+                return View("Index", await users1.ToListAsync());
+            }
+            if (TypeUserSelect != null && UserNamesSelect != null && NamesSelect != null)
+            {
+                users1 = users.Where(u => u.UserType.Contains(TypeUserSelect)).Where(u => u.UserName.Contains(UserNamesSelect)).Where(u => u.Name.Contains(NamesSelect));
+                return View("Index", await users1.ToListAsync());
+            }
+            //nothing
+            return View("Index", await users.ToListAsync());
+        }
+
     }
 }
+    
