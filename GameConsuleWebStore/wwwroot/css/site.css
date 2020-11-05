@@ -257,7 +257,7 @@ img.imgViewGameIndex {
         z-index: 2;
     }
 
-        .newsletter .content h2 {
+        .newsletter .content marquee {
             color: white;
             margin-bottom: 40px;
         }
