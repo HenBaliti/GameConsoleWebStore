@@ -1,4 +1,6 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Http
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -30,55 +32,6 @@
     </a>
 </div>
 
-
-
-@*<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
-        <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
-        </ol>
-        <div class="carousel-inner" role="listbox">
-            <div class="item active" style="background: url('./images/banner1.jpg') top center">
-                <div class="carousel-caption" role="option">
-                    <p>
-                        Learn How To Play Modern Warfer Now For Free
-                        <a class="btn btn-default" href="https://www.youtube.com/watch?v=CCANbzAysBQ">
-                            Learn More
-                        </a>
-                    </p>
-                </div>
-            </div>
-            <div class="item" style="background: url('./images/banner2.jpg') top center">
-                <div class="carousel-caption" role="option">
-                    <p>
-                        Fifa 20  - The Best Selling Game Of 2020
-                        <a class="btn btn-default" href="https://www.youtube.com/watch?v=B3FfEUYGNRM">
-                            Watch How To Play.
-                        </a>
-                    </p>
-                </div>
-            </div>
-            <div class="item" style="background: url('./images/banner3.jpg') top center">
-                <div class="carousel-caption" role="option">
-                    <p>
-                        God Of War.
-                        <a class="btn btn-default" href="https://www.youtube.com/watch?v=K0u_kAWLJOA">
-                            Learn More About This Game
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>*@
 <hr />
 
 <div class="row">
@@ -114,6 +67,68 @@
         </ul>
     </div>
 </div>
+<br />
+
+
+@*---------------------------For You By Recent Orders----------------------------*@
+
+@{
+    if (Context.Session.GetString("UserId") != null)
+    {
+
+        <hr />
+        <div class="row">
+            <h3>Recomended Product According To Your Previous Orders: </h3>
+        </div>
+    }
+}
+
+<br />
+
+<div class="row">
+    @{
+        if (Context.Session.GetString("UserId") != null)
+        {
+            if (ViewBag.ForYou == null)
+            {
+                <h4>You Have Not Order Yet.</h4>
+
+            }
+            else
+            {
+                foreach (Product item in ViewBag.ForYou)
+                {
+                    <div class="box col-md-3">
+                        <div class="imageContainer">
+                            <div class="image">
+                                <img class="imgViewGameIndex" src="~/images/@Html.DisplayFor(model => item.pathPicture)" />
+                            </div>
+                            <div class="actions">
+                                <a asp-action="Details" asp-route-id="@item.ProductId" title="Details Of Product"><img class="onPicOverViewGameIndex" src="~/images/information.svg" /></a>
+                                <a asp-controller="ShoppingCart" asp-action="OrderNow" asp-route-id="@item.ProductId" title="Add To Basket"><img class="onPicOverViewGameIndex" src="~/images/shopping-cart.svg" /></a>
+                            </div>
+                        </div>
+                        <div class="NameAndPriceBox">
+                            <p style="text-align:center">
+                                <b>
+                                    @Html.DisplayFor(model => item.Name) <b>  |  </b>
+                                    @Html.DisplayFor(model => item.Price)$
+                                </b>
+                            </p>
+                        </div>
+                    </div>
+                }
+
+            }
+        }
+    }
+</div>
+
+<br />
+<hr />
+
+
+
 <section class="newsletter">
     <div class="container">
         <div class="row">
@@ -131,6 +146,3 @@
         </div>
     </div>
 </section>
-<div id="gamediv">
-
-</div>

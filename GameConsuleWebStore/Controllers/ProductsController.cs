@@ -74,7 +74,7 @@ namespace GameConsuleWebStore.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductId,Name,ReleaseDate,Price,StockUnit,pathPicture,ConsoleType,Category,StoreLocation")] Product product)
+        public async Task<IActionResult> Create([Bind("Name,ReleaseDate,Price,StockUnit,pathPicture,ConsoleType,Category,StoreLocation")] Product product)
         {
             if (ModelState.IsValid)
             {
