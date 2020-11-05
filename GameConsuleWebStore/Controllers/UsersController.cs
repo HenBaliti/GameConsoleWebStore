@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using GameConsuleWebStore.Data;
 using GameConsuleWebStore.Models;
 using Microsoft.AspNetCore.Http;
+using GameConsuleWebStore.Controllers;
 
 namespace GameConsuleWebStore.Controllers
 {
@@ -193,6 +194,25 @@ namespace GameConsuleWebStore.Controllers
             return View(user);
         }
 
+        //DeleteOrder First
+        public void DeleteOrderFirst(int id)
+        {
+            var order2 = _context.Order.Include(x => x.ItemsPerOrder).First(o => o.Id == id);
+
+            //*********Removing the entity "Item" because its one to many realationship**********
+            foreach (Item idItem in order2.ItemsPerOrder)
+            {
+                Item item = _context.Item.Find(idItem.ItemId);
+                _context.Item.Remove(item);
+            }
+            Order order = _context.Order.Find(id);
+            _context.SaveChangesAsync();
+            _context.Order.Remove(order);
+            _context.SaveChangesAsync();
+
+        }
+
+
         // GET: Users/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -216,7 +236,16 @@ namespace GameConsuleWebStore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var orders = _context.Order.Where(p => p.User.Id.ToString().Equals(HttpContext.Session.GetString("UserId")));
+            
+            //*********Removing the entity "Order" because its one to many realationship**********
+            foreach (Order idOrder in orders)
+            {
+                DeleteOrderFirst(idOrder.Id);
+
+            }
             var user = await _context.User.FindAsync(id);
+            await _context.SaveChangesAsync();
             _context.User.Remove(user);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

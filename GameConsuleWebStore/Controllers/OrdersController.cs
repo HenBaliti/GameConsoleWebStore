@@ -227,7 +227,16 @@ namespace GameConsuleWebStore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var order2 = await _context.Order.Include(x=>x.ItemsPerOrder).FirstAsync(o=>o.Id==id);
+
+            //*********Removing the entity "Item" because its one to many realationship**********
+            foreach(Item idItem in order2.ItemsPerOrder)
+            {
+                var item = await _context.Item.FindAsync(idItem.ItemId);
+                _context.Item.Remove(item);
+            }
             var order = await _context.Order.FindAsync(id);
+            await _context.SaveChangesAsync();
             _context.Order.Remove(order);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
