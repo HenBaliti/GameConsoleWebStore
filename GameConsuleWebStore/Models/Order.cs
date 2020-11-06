@@ -17,6 +17,6 @@ namespace GameConsuleWebStore.Models
         public User User { get; set; }
 
         public ICollection<ProductOrder> ProductOrders { get; set; }
-        public ICollection<Item> ItemsPerOrder { get; set; }
+        public  ICollection<Item> ItemsPerOrder { get; set; }
     }
 }
