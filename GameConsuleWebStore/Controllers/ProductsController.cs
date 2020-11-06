@@ -18,6 +18,17 @@ namespace GameConsuleWebStore.Controllers
             _context = context;
         }
 
+        //Search *BOX*
+        public IActionResult Search(string name)
+        {
+            IQueryable<Product> products = _context.Product;
+            if (!string.IsNullOrEmpty(name))
+            {
+                products = products.Where(p => p.Name.Contains(name));
+            }
+            return View("Index", products.ToList());
+        }
+
         // GET: Products
         public async Task<IActionResult> Index()
         {

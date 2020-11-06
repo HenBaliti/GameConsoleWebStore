@@ -24,6 +24,15 @@ namespace GameConsuleWebStore.Controllers
             _logger = logger;
         }
 
+
+        public IActionResult SearchAutoComplete(string term)
+        {
+            var query = from p in _context.Product
+                        where p.Name.Contains(term)
+                        select new {id=p.ProductId ,label =p.Name ,value=p.ProductId };
+            return Json(query.ToList());
+        }
+
         public IActionResult Index()
         {
             return JustForYouByRecentOrders();

@@ -31,7 +31,7 @@ window.onload = function () {
 
     $.ajax(settings).done(function (response) {
         array = response.results;
-        //console.log(response);
+        console.log(response);
        
         for (var i = 0; i < array.length; i++) {
             var game = new Object();
@@ -68,15 +68,22 @@ window.onload = function () {
         const { cardDiv, cardSecondDiv, cardImg, cardH5, cardP } = card;
         var i = Math.floor(Math.random() * 11);
         cardDiv.className = "card bg-dark text-white";
+        cardDiv.style.width = "450px"
         cardSecondDiv.className = "card-img-overlay";
         cardImg.src = games[i].img;
         cardImg.className = "card-img";
-        cardImg.style.height = "250px";
+        cardImg.style.height = "205px";
+        cardImg.style.width = "205px";
+        cardImg.style.position = "relative";
+        cardImg.style.right = "-241px";
+        cardImg.style.borderRadius = "25px";
         cardH5.innerText = games[i].name;
         cardH5.className = "card-title";
+        cardH5.style.textShadow = " 3px 3px 5px white";
         //cardH5.style = "margin-left:440px";
         //cardP.style = "margin-left:440px";
         cardP.className = "card-text";
+        cardP.style.textShadow = " 3px 3px 5px white";
         cardP.innerText = games[i].games_count;
         card.style = "margin-top: 20px"
       
