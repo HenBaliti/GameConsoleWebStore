@@ -236,13 +236,12 @@ namespace GameConsuleWebStore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var orders = _context.Order.Where(p => p.User.Id.ToString().Equals(HttpContext.Session.GetString("UserId")));
+            var orders = _context.Order.Where(p => p.User.Id==id);
             
             //*********Removing the entity "Order" because its one to many realationship**********
             foreach (Order idOrder in orders)
             {
                 DeleteOrderFirst(idOrder.Id);
-
             }
             var user = await _context.User.FindAsync(id);
             await _context.SaveChangesAsync();
