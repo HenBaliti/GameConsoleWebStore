@@ -126,8 +126,53 @@
 
 <br />
 <hr />
-<h4>Top Companies Database</h4>
-<div id="gamediv" style="margin-top:20px"></div>
+
+<div class="row">
+    <div class="col-md-5" id="gamediv" style="margin-top:20px"><h4>Top Companies Database</h4><br /></div>
+    <div class="col-md-2"></div>
+    <div class="col-md-5">
+        <h4>Last Twits About The Site</h4><br />
+        <a class="twitter-timeline" data-width="400" data-height="300" href="https://twitter.com/BalitiHen?ref_src=twsrc%5Etfw">Tweets by BalitiHen</a>
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        <br />
+
+        @{
+            if (Context.Session.GetString("UserName") != null)
+            {
+
+                <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+                <script>
+
+                    function GetMessage() {
+                        var mData = document.getElementById("MessageData").value;
+                        var mName = document.getElementById("pName").innerHTML;
+                        $.get("/Home/Tweet", { MessageData: mData, MessageName: mName });
+                        document.getElementById("MessageData").value = "";
+                        alert("Twitt Has Been Succses");
+
+                    }
+                </script>
+                <p id="pName" hidden>@Context.Session.GetString("UserName")</p>
+                <p>Hello <b>@Context.Session.GetString("UserName")</b>,Please Leave Us A Tweet</p>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Data Message: </span>
+                    </div>
+                    <textarea id="MessageData" class="form-control" aria-label="With textarea"></textarea>
+                </div>
+                <br />
+                <button type="button" onclick="GetMessage()" style="border-radius: 3px; border: 1px solid white; display: inline-block; cursor: pointer; background: #55ACEE; color: white;height: 34px;
+    width: 110px; "><img src="~/images/twitter-black-shape.png" style="height:auto;width:19px;"/>  Add Tweet</button>
+                @*<a class="twitter-share-button"
+                   data-size="large" onclick="GetMessage()" href="#">
+                    Tweet
+                </a>*@
+
+            }
+        }
+
+    </div>
+</div>
 
 <br />
 <section class="newsletter">
@@ -147,4 +192,6 @@
         </div>
     </div>
 </section>
+
+
 

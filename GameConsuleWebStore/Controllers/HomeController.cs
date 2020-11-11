@@ -10,6 +10,10 @@ using Microsoft.AspNetCore.Http;
 using GameConsuleWebStore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
+using System.Text;
+using System.Security.Cryptography;
+using System.Net;
+using System.IO;
 
 namespace GameConsuleWebStore.Controllers
 {
@@ -23,6 +27,89 @@ namespace GameConsuleWebStore.Controllers
             _context = context;
             _logger = logger;
         }
+
+        //---------------Twitter Api-------------------
+
+        public void Tweet(string MessageData,string MessageName)
+        {
+            string PreMessage = "Hello Dear Customers this is another Twit about our web store by a new customer that have ordered some games.";
+            string messageToPost =PreMessage+ "\n------------------------------\n" + "Message By: "+ MessageName+" \n"+MessageData+ "\n ------------------------------\nCome Shop Now on Our Store https://www.gamestore.com/";
+            string twitterURL = "https://api.twitter.com/1.1/statuses/update.json";
+
+            string oauth_consumer_key = "gb5XDMryCTWU8ikMKFnecAIi9";
+            string oauth_consumer_secret = "Qonnzs8eR214CGTkDXV1CSZGvtKxKwgKI1QujCgx5ruK2Zd5dD";
+            string oauth_token = "1325500759279071234-tlmHj9GGNvp3Fdm8nGJZ589NpFO3c7";
+            string oauth_token_secret = "T7K61Bw7dQHNlIqrLtlzRGyIGreWyJCgVwGEXo74kLcVH";
+
+            // set the oauth version and signature method
+            string oauth_version = "1.0";
+            string oauth_signature_method = "HMAC-SHA1";
+
+            // create unique request details
+            string oauth_nonce = Convert.ToBase64String(new ASCIIEncoding().GetBytes(DateTime.Now.Ticks.ToString()));
+            System.TimeSpan timeSpan = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc));
+            string oauth_timestamp = Convert.ToInt64(timeSpan.TotalSeconds).ToString();
+
+            // create oauth signature
+            string baseFormat = "oauth_consumer_key={0}&oauth_nonce={1}&oauth_signature_method={2}" + "&oauth_timestamp={3}&oauth_token={4}&oauth_version={5}&status={6}";
+
+            string baseString = string.Format(
+                baseFormat,
+                oauth_consumer_key,
+                oauth_nonce,
+                oauth_signature_method,
+                oauth_timestamp, oauth_token,
+                oauth_version,
+                Uri.EscapeDataString(messageToPost)
+            );
+
+            string oauth_signature = null;
+            using (HMACSHA1 hasher = new HMACSHA1(ASCIIEncoding.ASCII.GetBytes(Uri.EscapeDataString(oauth_consumer_secret) + "&" + Uri.EscapeDataString(oauth_token_secret))))
+            {
+                oauth_signature = Convert.ToBase64String(hasher.ComputeHash(ASCIIEncoding.ASCII.GetBytes("POST&" + Uri.EscapeDataString(twitterURL) + "&" + Uri.EscapeDataString(baseString))));
+            }
+
+            // create the request header
+            string authorizationFormat = "OAuth oauth_consumer_key=\"{0}\", oauth_nonce=\"{1}\", " + "oauth_signature=\"{2}\", oauth_signature_method=\"{3}\", " + "oauth_timestamp=\"{4}\", oauth_token=\"{5}\", " + "oauth_version=\"{6}\"";
+
+            string authorizationHeader = string.Format(
+                authorizationFormat,
+                Uri.EscapeDataString(oauth_consumer_key),
+                Uri.EscapeDataString(oauth_nonce),
+                Uri.EscapeDataString(oauth_signature),
+                Uri.EscapeDataString(oauth_signature_method),
+                Uri.EscapeDataString(oauth_timestamp),
+                Uri.EscapeDataString(oauth_token),
+                Uri.EscapeDataString(oauth_version)
+            );
+
+            HttpWebRequest objHttpWebRequest = (HttpWebRequest)WebRequest.Create(twitterURL);
+            objHttpWebRequest.Headers.Add("Authorization", authorizationHeader);
+            objHttpWebRequest.Method = "POST";
+            objHttpWebRequest.ContentType = "application/x-www-form-urlencoded";
+            using (Stream objStream = objHttpWebRequest.GetRequestStream())
+            {
+                byte[] content = ASCIIEncoding.ASCII.GetBytes("status=" + Uri.EscapeDataString(messageToPost));
+                objStream.Write(content, 0, content.Length);
+            }
+
+            var responseResult = "";
+
+            try
+            {
+                //success posting
+                WebResponse objWebResponse = objHttpWebRequest.GetResponse();
+                StreamReader objStreamReader = new StreamReader(objWebResponse.GetResponseStream());
+                responseResult = objStreamReader.ReadToEnd().ToString();
+            }
+            catch (Exception ex)
+            {
+                responseResult = "Twitter Post Error: " + ex.Message.ToString() + ", authHeader: " + authorizationHeader;
+            }
+        }
+
+        //---------------^^^^^^^^^^ Twitter Api ^^^^^^^^^^-------------------
+
 
 
         public IActionResult SearchAutoComplete(string term)
