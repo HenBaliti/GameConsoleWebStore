@@ -32,7 +32,7 @@ namespace GameConsuleWebStore.Controllers
 
         public void Tweet(string MessageData,string MessageName)
         {
-            string PreMessage = "Hello Dear Customers this is another Twit about our web store by a new customer that have ordered some games.";
+            string PreMessage = "Hello Dear Customers this is another Tweet about our web store by a new customer.";
             string messageToPost =PreMessage+ "\n------------------------------\n" + "Message By: "+ MessageName+" \n"+MessageData+ "\n ------------------------------\nCome Shop Now on Our Store https://www.gamestore.com/";
             string twitterURL = "https://api.twitter.com/1.1/statuses/update.json";
 
@@ -122,6 +122,23 @@ namespace GameConsuleWebStore.Controllers
 
         public IActionResult Index()
         {
+            //------------------YouTube Video-----------
+            var random = new Random();
+            List<string> YoutubeTextList = new List<string>();
+            List<string> YoutubeEmbedList = new List<string>();
+            YoutubeEmbedList.Add("https://www.youtube.com/embed/tuLAn9adQpI");
+            YoutubeTextList.Add("FIFA 21 | Official Reveal Trailer");
+            YoutubeEmbedList.Add("https://www.youtube.com/embed/bH1lHCirCGI");
+            YoutubeTextList.Add("Official Call of Duty®: Modern Warfare®");
+            YoutubeEmbedList.Add("https://www.youtube.com/embed/s7qB4IMJicc");
+            YoutubeTextList.Add("ASSASSIN'S CREED ODYSSEY Official Trailer");
+            int index = random.Next(YoutubeEmbedList.Count);
+            string EmbedYoutube = YoutubeEmbedList[index];
+            string TextYoutube = YoutubeTextList[index];
+            ViewBag.YouTubeUrl = EmbedYoutube;
+            ViewBag.YouTubeText = TextYoutube;
+            //------------------YouTube Video-----------
+
             return JustForYouByRecentOrders();
         }
 
