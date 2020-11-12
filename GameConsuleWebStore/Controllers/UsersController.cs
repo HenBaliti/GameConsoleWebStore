@@ -160,6 +160,7 @@ namespace GameConsuleWebStore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,UserName,Password,UserType,Email")] User user)
         {
+            HttpContext.Session.SetString("UserName", user.Name);
             if (id != user.Id)
             {
                 return NotFound();
