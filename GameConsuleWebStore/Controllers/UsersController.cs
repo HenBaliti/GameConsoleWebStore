@@ -69,8 +69,9 @@ namespace GameConsuleWebStore.Controllers
         {
             return View();
         }
+
         [HttpPost]
-        public async Task<IActionResult> Register([Bind("Id,Name,UserName,Password,UserType,Email")] User user)
+        public async Task<IActionResult> Register([Bind("Name,UserName,Password,UserType,Email")] User user)
         {
             user.UserType = "User";
             _context.Add(user);
@@ -79,6 +80,7 @@ namespace GameConsuleWebStore.Controllers
             SignIn(user);
             return RedirectToAction("Index", "Home");
         }
+
 
         public IActionResult LogOut()
         {
