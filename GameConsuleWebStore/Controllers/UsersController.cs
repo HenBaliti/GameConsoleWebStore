@@ -70,17 +70,9 @@ namespace GameConsuleWebStore.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Register(string fullName, string UserName, string password, string email)
+        public async Task<IActionResult> Register([Bind("Id,Name,UserName,Password,UserType,Email")] User user)
         {
-            User user = new User()
-            { //Checking the value - if its not in the data and al of this....
-                UserName = UserName,
-                Name = fullName,
-                Password = password,
-                Email = email,
-                UserType = "User"
-            };
-
+            user.UserType = "User";
             _context.Add(user);
             await _context.SaveChangesAsync();
 
