@@ -114,7 +114,7 @@
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                 <a class="dropdown-item" asp-controller="Users" asp-action="Edit" asp-route-id="@Context.Session.GetString("UserId")">Edit User Details</a>
                                 <hr />
-                                <a class="dropdown-item" asp-controller="Orders" asp-action="Details" asp-route-id="@Context.Session.GetString("UserId")">My Order's</a>
+                                <a class="dropdown-item" asp-controller="Orders" asp-action="ShowOrders" asp-route-id="@Context.Session.GetString("UserId")">My Order's</a>
                                 <hr />
                                 <a class="dropdown-item" asp-controller="Users" asp-action="LogOut">Log Out</a>
                             </div>
