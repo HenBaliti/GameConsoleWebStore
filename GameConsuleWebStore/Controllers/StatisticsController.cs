@@ -10,8 +10,7 @@ namespace GameConsuleWebStore.Controllers
     {
         public IActionResult Index()
         {
-            
-            return View("~/Views/Statistics/PieStat.cshtml");
+            return View("PieStat");
         }
     }
 }
