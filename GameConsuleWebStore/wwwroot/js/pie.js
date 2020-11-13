@@ -1,39 +1,64 @@
-﻿<script src="https://d3js.org/d3.v5.js"></script>
-<script>
-////    chart = {
-////    const arcs = pie(data);
+﻿
+    $(function () {
+        $.ajax({
+            url: "/Products/getStock",
+            success: function (term) {
+                var data = term;
+                // set the color scale
 
-////    const svg = d3.create("svg")
-////        .attr("viewBox", [-width / 2, -height / 2, width, height]);
+                var width = 450
+                var height = 450
+                var margin = 40
 
-////    svg.append("g")
-////        .attr("stroke", "white")
-////        .selectAll("path")
-////        .data(arcs)
-////        .join("path")
-////        .attr("fill", d => color(d.data.name))
-////        .attr("d", arc)
-////        .append("title")
-////        .text(d => `${d.data.name}: ${d.data.value.toLocaleString()}`);
+                // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
+                var radius = Math.min(width, height) / 2 - margin
 
-////    svg.append("g")
-////        .attr("font-family", "sans-serif")
-////        .attr("font-size", 12)
-////        .attr("text-anchor", "middle")
-////        .selectAll("text")
-////        .data(arcs)
-////        .join("text")
-////        .attr("transform", d => `translate(${arcLabel.centroid(d)})`)
-////        .call(text => text.append("tspan")
-////            .attr("y", "-0.4em")
-////            .attr("font-weight", "bold")
-////            .text(d => d.data.name))
-////        .call(text => text.filter(d => (d.endAngle - d.startAngle) > 0.25).append("tspan")
-////            .attr("x", 0)
-////            .attr("y", "0.7em")
-////            .attr("fill-opacity", 0.7)
-////            .text(d => d.data.value.toLocaleString()));
+                // append the svg object to the div called 'my_dataviz'
+                var svg = d3.select("#my_dataviz")
+                    .append("svg")
+                    .attr("width", width)
+                    .attr("height", height)
+                    .append("g")
+                    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+                var color = d3.scaleOrdinal()
+                    .domain(data)
+                    .range(d3.schemeSet2);
 
-////    return svg.node();
-////}
-////</script>
+                // Compute the position of each group on the pie:
+                var pie = d3.pie()
+                    .value(function (d) { return d.value; })
+                var data_ready = pie(d3.entries(data))
+                // Now I know that group A goes from 0 degrees to x degrees and so on.
+
+                // shape helper to build arcs:
+                var arcGenerator = d3.arc()
+                    .innerRadius(0)
+                    .outerRadius(radius)
+
+                // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
+                svg
+                    .selectAll('mySlices')
+                    .data(data_ready)
+                    .enter()
+                    .append('path')
+                    .attr('d', arcGenerator)
+                    .attr('fill', function (d) { return (color(d.data.key)) })
+                    .attr("stroke", "black")
+                    .style("stroke-width", "2px")
+                    .style("opacity", 0.7)
+
+                // Now add the annotation. Use the centroid method to get the best coordinates
+                svg
+                    .selectAll('mySlices')
+                    .data(data_ready)
+                    .enter()
+                    .append('text')
+                    .text(function (d) { return d.data.key })
+                    .attr("transform", function (d) { return "translate(" + arcGenerator.centroid(d) + ")"; })
+                    .style("text-anchor", "middle")
+                    .style("font-size", 17)
+
+            }
+        });
+    });
+

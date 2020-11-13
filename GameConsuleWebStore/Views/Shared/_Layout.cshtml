@@ -8,6 +8,8 @@
     <title>@ViewData["Title"] - GameConsuleWebStore</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 <body>
     <header>
@@ -20,7 +22,7 @@
             <img src="~/images/wii.png" alt="logo" id="logonwiiu">
             <form asp-action="Search" asp-controller="Products">
                 @*SearchBox*@
-                <input name="name" id="SearchBoxInput" placeholder="Search On Site" style="position: absolute; top: 3px; right: 1044px; height: 23px;" autocomplete="off"/>
+                <input name="name" id="SearchBoxInput" placeholder="Search On Site" style="position: absolute; top: 3px; right: 1044px; height: 23px;" autocomplete="off" />
                 <div id="DivLoading" class="spinner-border text-dark" role="status" style=" top: 6px; right: 1074px; position: absolute; width: 18px; height: 18px;">
                     <span class="sr-only">Loading...</span>
                 </div>
@@ -47,7 +49,7 @@
                         <a class="nav-link" asp-controller="Orders" asp-action="ShowOrders" asp-route-id="@Context.Session.GetString("UserId")" tabindex="-1" aria-disabled="true">Orders</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Statistics" asp-action="Index" tabindex="-1" aria-disabled="true">Statistics</a>
+                        <a class="nav-link" asp-controller="Home" asp-action="Index2" tabindex="-1" aria-disabled="true">About</a>
                     </li>
 
 
@@ -68,6 +70,8 @@
                                         <a class="dropdown-item" asp-controller="Products" asp-action="Index">Edit Products</a>
                                         <hr />
                                         <a class="dropdown-item" asp-controller="Orders" asp-action="Index">Edit Orders</a>
+                                        <hr />
+                                        <a class="dropdown-item" asp-controller="Statistics" asp-action="Index">Store Stats</a>
                                     </div>
                                 </div>
                             </li>
@@ -176,10 +180,11 @@
             &copy; 2020 - GameConsuleWebStore - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://d3js.org/d3.v4.js"></script>
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="~/js/SearchJS.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>

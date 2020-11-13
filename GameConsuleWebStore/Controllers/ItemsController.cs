@@ -12,7 +12,6 @@ namespace GameConsuleWebStore.Controllers
     public class ItemsController : Controller
     {
         private readonly GameConsuleWebStoreContext _context;
-
         public ItemsController(GameConsuleWebStoreContext context)
         {
             _context = context;
