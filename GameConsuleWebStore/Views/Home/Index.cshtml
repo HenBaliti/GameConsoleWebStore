@@ -40,6 +40,8 @@
             <li>
 
                 <b>What is Lorem Ipsum?</b>
+                <br />
+                <br />
                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
 
 
@@ -51,6 +53,8 @@
             <li>
 
                 <b>Why do we use it?</b>
+                <br />
+                <br />
                 <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
 
             </li>
@@ -60,8 +64,11 @@
         <ul style="list-style-type:none">
             <li>
 
-                <b>Where can I get some?</b>
-                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.</p>
+                <b>@ViewBag.YouTubeText</b>
+                <br />
+                <br />
+                <iframe width="350" height="345" src="@ViewBag.YouTubeUrl">
+                </iframe>
 
             </li>
         </ul>
@@ -104,7 +111,7 @@
                                 <img class="imgViewGameIndex" src="~/images/@Html.DisplayFor(model => item.pathPicture)" />
                             </div>
                             <div class="actions">
-                                <a asp-action="Details" asp-route-id="@item.ProductId" title="Details Of Product"><img class="onPicOverViewGameIndex" src="~/images/information.svg" /></a>
+                                <a asp-controller="Products" asp-action="Details" asp-route-id="@item.ProductId" title="Details Of Product"><img class="onPicOverViewGameIndex" src="~/images/information.svg" /></a>
                                 <a asp-controller="ShoppingCart" asp-action="OrderNow" asp-route-id="@item.ProductId" title="Add To Basket"><img class="onPicOverViewGameIndex" src="~/images/shopping-cart.svg" /></a>
                             </div>
                         </div>
@@ -126,8 +133,53 @@
 
 <br />
 <hr />
-<h4>Top Companies Database</h4>
-<div id="gamediv" style="margin-top:20px"></div>
+
+<div class="row">
+    <div class="col-md-5" id="gamediv" style="margin-top:20px"><h4>Top Companies Database</h4><br /></div>
+    <div class="col-md-2"></div>
+    <div class="col-md-5">
+        <h4>Last Twits About The Site</h4><br />
+        <a class="twitter-timeline" data-width="400" data-height="300" href="https://twitter.com/BalitiHen?ref_src=twsrc%5Etfw">Tweets by BalitiHen</a>
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        <br />
+
+        @{
+            if (Context.Session.GetString("UserName") != null)
+            {
+
+                <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+                <script>
+
+                    function GetMessage() {
+                        var mData = document.getElementById("MessageData").value;
+                        var mName = document.getElementById("pName").innerHTML;
+                        $.get("/Home/Tweet", { MessageData: mData, MessageName: mName });
+                        document.getElementById("MessageData").value = "";
+                        alert("Twitt Has Been Succses");
+
+                    }
+                </script>
+                <p id="pName" hidden>@Context.Session.GetString("UserName")</p>
+                <p>Hello <b>@Context.Session.GetString("UserName")</b>,Please Leave Us A Tweet</p>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Data Message: </span>
+                    </div>
+                    <textarea id="MessageData" class="form-control" aria-label="With textarea"></textarea>
+                </div>
+                <br />
+                <button type="button" onclick="GetMessage()" style="border-radius: 3px; border: 1px solid white; display: inline-block; cursor: pointer; background: #55ACEE; color: white;height: 34px;
+    width: 110px; "><img src="~/images/twitter-black-shape.png" style="height:auto;width:19px;"/>  Add Tweet</button>
+                @*<a class="twitter-share-button"
+                   data-size="large" onclick="GetMessage()" href="#">
+                    Tweet
+                </a>*@
+
+            }
+        }
+
+    </div>
+</div>
 
 <br />
 <section class="newsletter">
@@ -147,4 +199,6 @@
         </div>
     </div>
 </section>
+
+
 

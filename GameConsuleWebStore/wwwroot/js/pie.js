@@ -1,4 +1,4 @@
-﻿
+
     $(function () {
         $.ajax({
             url: "/Products/getStock",
