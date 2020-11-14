@@ -37,8 +37,12 @@ namespace GameConsuleWebStore.Controllers
 
 
         //Login
-        public IActionResult Login()
+        public IActionResult Login(string dsf)
         {
+            if (dsf != null)
+            {
+                ViewBag.AlertUser = dsf;
+            }
             return View();
         }
 
