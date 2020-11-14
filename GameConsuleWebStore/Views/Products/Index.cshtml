@@ -8,6 +8,15 @@
 <div class="row"><ul></ul></div>
 <div class="row"><ul></ul></div>
 
+<form asp-action="Search" asp-controller="Products">
+    @*SearchBox*@
+    <input name="name" id="SearchBoxInput" placeholder="Search a Product" style="position: absolute; top: 3px; right: 1044px; height: 23px;" autocomplete="off" />
+    <div id="DivLoading" class="spinner-border text-dark" role="status" style=" top: 6px; right: 1074px; position: absolute; width: 18px; height: 18px;">
+        <span class="sr-only">Loading...</span>
+    </div>
+    <button type="submit" value="Search"><img id="SearchImg" src="~/images/SearchIcon.png" style=" height: 19px; width: auto; position: absolute; top: 5px; right: 1049px;" /></button>
+</form>
+
 <form asp-action="SearchByConsoleType">
     <div class="row">
         <div class="col-md-3">

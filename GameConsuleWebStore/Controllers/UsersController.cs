@@ -245,6 +245,24 @@ namespace GameConsuleWebStore.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public IActionResult SearchAutoComplete(string term)
+        {
+            var query = from p in _context.User
+                        where p.UserName.Contains(term)
+                        select new { id = p.Id, label = p.UserName, value = p.Id };
+            return Json(query.ToList());
+        }
+
+        public IActionResult SearchUser(string name)
+        {
+            IQueryable<User> users = _context.User;
+            if (!string.IsNullOrEmpty(name))
+            {
+                users = users.Where(p => p.UserName.Contains(name));
+            }
+            return View("Index", users.ToList());
+        }
+
         private bool UserExists(int id)
         {
             return _context.User.Any(e => e.Id == id);
