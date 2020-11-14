@@ -33,7 +33,8 @@ namespace GameConsuleWebStore.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Users");
+                //return RedirectToAction("Login", "Users");
+                return RedirectToAction("Login", "Users", new { dsf = "sasdasd" });
             }
             return View(result);
         }
@@ -43,6 +44,10 @@ namespace GameConsuleWebStore.Controllers
         // GET: Orders
         public async Task<IActionResult> Index()
         {
+            if (HttpContext.Session.GetString("UserType") != "Admin")
+            {
+                return RedirectToAction("Login", "Users", new { dsf = "You are not admin." });
+            }
             return View(await _context.Order.ToListAsync());
         }
 
@@ -124,7 +129,7 @@ namespace GameConsuleWebStore.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Login","Users");
+                    return RedirectToAction("Login", "Users", new { dsf = "You are not connected." });
                 }
                 //Adding the "many to many" function -> The OrderCntroller Creating a new Order with many products.
                 order.DateOrder = DateTime.Now;

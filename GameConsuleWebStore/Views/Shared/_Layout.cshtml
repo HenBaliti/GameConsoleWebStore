@@ -20,14 +20,14 @@
             <img src="~/images/Xbox_logo_(2019).png" alt="logo" id="logoxbox">
             <img src="~/images/Nintendo_red_logo.png" alt="logo" id="logonintendo">
             <img src="~/images/wii.png" alt="logo" id="logonwiiu">
-            <form asp-action="Search" asp-controller="Products">
-                @*SearchBox*@
-                <input name="name" id="SearchBoxInput" placeholder="Search On Site" style="position: absolute; top: 3px; right: 1044px; height: 23px;" autocomplete="off" />
+            <!--<form asp-action="Search" asp-controller="Products">-->
+            @*SearchBox*@
+            <!--<input name="name" id="SearchBoxInput" placeholder="Search On Site" style="position: absolute; top: 3px; right: 1044px; height: 23px;" autocomplete="off" />
                 <div id="DivLoading" class="spinner-border text-dark" role="status" style=" top: 6px; right: 1074px; position: absolute; width: 18px; height: 18px;">
                     <span class="sr-only">Loading...</span>
                 </div>
                 <button type="submit" value="Search"><img id="SearchImg" src="~/images/SearchIcon.png" style="height: 35px; width: auto; position: absolute; top: -2px; right: 1041px;" /></button>
-            </form>
+            </form>-->
         </div>
 
 
@@ -118,7 +118,7 @@
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                 <a class="dropdown-item" asp-controller="Users" asp-action="Edit" asp-route-id="@Context.Session.GetString("UserId")">Edit User Details</a>
                                 <hr />
-                                <a class="dropdown-item" asp-controller="Orders" asp-action="Details" asp-route-id="@Context.Session.GetString("UserId")">My Order's</a>
+                                <a class="dropdown-item" asp-controller="Orders" asp-action="ShowOrders" asp-route-id="@Context.Session.GetString("UserId")">My Order's</a>
                                 <hr />
                                 <a class="dropdown-item" asp-controller="Users" asp-action="LogOut">Log Out</a>
                             </div>
@@ -186,6 +186,7 @@
     <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/SearchJS.js" asp-append-version="true"></script>
+    <script src="~/js/SearchJsUser.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

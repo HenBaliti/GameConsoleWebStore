@@ -67,6 +67,8 @@ namespace GameConsuleWebStore.Controllers
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            ViewBag.ProdIdForView = id;
+
             var product2 = await _context.Product
     .FirstOrDefaultAsync(m => m.ProductId == id);
             var StoreNameOfCurrent = product2.StoreLocation;
