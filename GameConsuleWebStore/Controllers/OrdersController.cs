@@ -29,7 +29,15 @@ namespace GameConsuleWebStore.Controllers
             List<Order> result = new List<Order>();
             if(HttpContext.Session.GetString("UserId")!=null)
             {
-                result = _context.Order.Where(p => p.User.Id == id).ToList();
+                if (_context.Order.ToList().Count == 0)
+                {
+                    ViewBag.Show = "There is no any Orders. Please wait until create a new one";
+                    return View();
+                }
+                else
+                {
+                    result = _context.Order.Where(p => p.User.Id == id).ToList();
+                }
             }
             else
             {

@@ -8,105 +8,14 @@
 <div class="row"><ul></ul></div>
 <div class="row"><ul></ul></div>
 
-<form asp-action="Search" asp-controller="Products">
-    @*SearchBox*@
-    <input name="name" id="SearchBoxInput" placeholder="Search a Product" style="position: absolute; top: 3px; right: 1044px; height: 23px;" autocomplete="off" />
-    <div id="DivLoading" class="spinner-border text-dark" role="status" style=" top: 6px; right: 1074px; position: absolute; width: 18px; height: 18px;">
-        <span class="sr-only">Loading...</span>
-    </div>
-    <button type="submit" value="Search"><img id="SearchImg" src="~/images/SearchIcon.png" style=" height: 19px; width: auto; position: absolute; top: 5px; right: 1049px;" /></button>
-</form>
-
-<form asp-action="SearchByConsoleType">
-    <div class="row">
-        <div class="col-md-3">
-            <p><b>Filter By Console Type:</b></p>
-            <select name="TypeConsoleSelect" id="ConsoleSelect">
-                <option value="">--Choose--</option>
-                <option value="PS2">PS2</option>
-                <option value="PS3">PS3</option>
-                <option value="PS4">PS4</option>
-                <option value="Nintendo">Nintendo</option>
-                <option value="XBOX">XBOX</option>
-                <option value="WII">WII</option>
-            </select>
-        </div>
-
-        <div class="col-md-3">
-            <p><b>Filter by Category:</b></p>
-            <select name="TypeCategorySelect" id="CategorySelect">
-                <option value="">--Choose--</option>
-                <option value="Indie">Indie</option>
-                <option value="Adventure">Adventure</option>
-                <option value="Strategy">Strategy</option>
-                <option value="Action">Action</option>
-                <option value="Sport">Sport</option>
-                <option value="RPG">RPG</option>
-                <option value="Children">Children</option>
-            </select>
-        </div>
-        <div class="col-md-3">
-            <p><b>Filter By Range Price:</b></p>
-            <div class="d-flex justify-content-center my-4">
-                <input class="range-slider" id="RangePrice" type="range" name="FilterByPrice" value="0" min="0" max="@ViewBag.MaxPrice">
-                <span class="range-slider__value" id="FilterByPrice"></span>
-
-            </div>
-        </div>
-        <div class="col-md-3">
-            <a href=Products/SearchByConsoleType>
-                <input type="submit" value="Filter" class="btn btn-dark" />
-            </a>
-
-        </div>
-    </div>
-</form>
-<hr />
-
-
-<h2>Game Products</h2>
-
-<div class="row"><ul></ul></div>
-<div class="row"><ul></ul></div>
-
-
 @{var counter = 1; }
 
-<div class="row">
-    @foreach (var item in Model)
+@{
+    if (@ViewBag.Show != null)
     {
-        <div class="col-md-4">
-            <!-- Box -->
-            <div class="box">
-                <div class="imageContainer">
-                    <div class="image">
-                        <img class="imgViewGameIndex" src="~/images/@Html.DisplayFor(model => item.pathPicture)" />
-                    </div>
-                    <div class="actions">
-                        <a asp-action="Details" asp-route-id="@item.ProductId" title="Details Of Product"><img class="onPicOverViewGameIndex" src="~/images/information.svg" /></a>
-                        <a asp-controller="ShoppingCart" asp-action="OrderNow" asp-route-id="@item.ProductId" title="Add To Basket"><img class="onPicOverViewGameIndex" src="~/images/shopping-cart.svg" /></a>
-                        @{
-                            if (Context.Session.GetString("UserType") == "Admin")
-                            {
-                                <a asp-action="Edit" asp-route-id="@item.ProductId" title="Edit Product"><img class="onPicOverViewGameIndex" src="~/images/EditPic.svg" /></a>
-                                <a asp-action="Delete" asp-route-id="@item.ProductId" title="Delete Product"><img style="position: absolute; top: 10px; right: 85px;" src="~/images/remove.png" /></a>
-                            }
-                        }
-                    </div>
-                </div>
-                <div class="NameAndPriceBox">
-                    <p style="text-align:center">
-                        <b>
-                            @Html.DisplayFor(model => item.Name) <b>  |  </b>
-                            @Html.DisplayFor(model => item.Price)$
-                        </b>
-                    </p>
-                </div>
-            </div>
-        </div>
-        if ((counter == ViewBag.GamesLength) && (Context.Session.GetString("UserType") == "Admin"))
+        if (Context.Session.GetString("UserType") == "Admin")
         {
-
+            <p>@ViewBag.Show</p>
             <div class="col-md-4">
                 <div class="box">
                     <div class="imageContainer">
@@ -123,14 +32,143 @@
 
             </div>
         }
-        counter++;
-
-
+        else
+        {
+            <p>There is no products. You Are not admin.</p>
+        }
     }
-    @*IndexViewGame-Admin = adding game to db*@
-    @*<div class="col-md-4"><ul class="ulViewGameIndex"><li><img id="PlusViewGameIndex" src="~/images/plus-black-symbol.svg"></li></ul></div>*@
+    else
+    {
+        <form asp-action="Search" asp-controller="Products">
+            @*SearchBox*@
+            <input name="name" id="SearchBoxInput" placeholder="Search a Product" style="position: absolute; top: 3px; right: 1044px; height: 23px;" autocomplete="off" />
+            <div id="DivLoading" class="spinner-border text-dark" role="status" style=" top: 6px; right: 1074px; position: absolute; width: 18px; height: 18px;">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <button type="submit" value="Search"><img id="SearchImg" src="~/images/SearchIcon.png" style=" height: 19px; width: auto; position: absolute; top: 5px; right: 1049px;" /></button>
+        </form>
 
-</div>
+        <form asp-action="SearchByConsoleType">
+            <div class="row">
+                <div class="col-md-3">
+                    <p><b>Filter By Console Type:</b></p>
+                    <select name="TypeConsoleSelect" id="ConsoleSelect">
+                        <option value="">--Choose--</option>
+                        <option value="PS2">PS2</option>
+                        <option value="PS3">PS3</option>
+                        <option value="PS4">PS4</option>
+                        <option value="Nintendo">Nintendo</option>
+                        <option value="XBOX">XBOX</option>
+                        <option value="WII">WII</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <p><b>Filter by Category:</b></p>
+                    <select name="TypeCategorySelect" id="CategorySelect">
+                        <option value="">--Choose--</option>
+                        <option value="Indie">Indie</option>
+                        <option value="Adventure">Adventure</option>
+                        <option value="Strategy">Strategy</option>
+                        <option value="Action">Action</option>
+                        <option value="Sport">Sport</option>
+                        <option value="RPG">RPG</option>
+                        <option value="Children">Children</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <p><b>Filter By Range Price:</b></p>
+                    <div class="d-flex justify-content-center my-4">
+                        <input class="range-slider" id="RangePrice" type="range" name="FilterByPrice" value="0" min="0" max="@ViewBag.MaxPrice">
+                        <span class="range-slider__value" id="FilterByPrice"></span>
+
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <a href=Products/SearchByConsoleType>
+                        <input type="submit" value="Filter" class="btn btn-dark" />
+                    </a>
+
+                </div>
+            </div>
+        </form>
+        <hr />
+
+
+        <h2>Game Products</h2>
+
+        <div class="row"><ul></ul></div>
+        <div class="row"><ul></ul></div>
+
+
+
+
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4">
+                    <!-- Box -->
+                    <div class="box">
+                        <div class="imageContainer">
+                            <div class="image">
+                                <img class="imgViewGameIndex" src="~/images/@Html.DisplayFor(model => item.pathPicture)" />
+                            </div>
+                            <div class="actions">
+                                <a asp-action="Details" asp-route-id="@item.ProductId" title="Details Of Product"><img class="onPicOverViewGameIndex" src="~/images/information.svg" /></a>
+                                <a asp-controller="ShoppingCart" asp-action="OrderNow" asp-route-id="@item.ProductId" title="Add To Basket"><img class="onPicOverViewGameIndex" src="~/images/shopping-cart.svg" /></a>
+                                @{
+                                    if (Context.Session.GetString("UserType") == "Admin")
+                                    {
+                                        <a asp-action="Edit" asp-route-id="@item.ProductId" title="Edit Product"><img class="onPicOverViewGameIndex" src="~/images/EditPic.svg" /></a>
+                                        <a asp-action="Delete" asp-route-id="@item.ProductId" title="Delete Product"><img style="position: absolute; top: 10px; right: 85px;" src="~/images/remove.png" /></a>
+                                    }
+                                }
+                            </div>
+
+
+
+                        </div>
+                        <div class="NameAndPriceBox">
+                            <p style="text-align:center">
+                                <b>
+                                    @Html.DisplayFor(model => item.Name) <b>  |  </b>
+                                    @Html.DisplayFor(model => item.Price)$
+                                </b>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                if ((counter == ViewBag.GamesLength) && (Context.Session.GetString("UserType") == "Admin"))
+                {
+
+                    <div class="col-md-4">
+                        <div class="box">
+                            <div class="imageContainer">
+                                <div class="image">
+                                    <a asp-controller="Products" asp-action="Create"><img class="imgViewGameIndex" src="~/images/PlusIcon.png" /></a>
+                                </div>
+                                <div class="NameAndPriceBox">
+                                    <p style="text-align:center">
+                                        <b>Create New Game</b>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                }
+                counter++;
+
+
+            }
+            @*IndexViewGame-Admin = adding game to db*@
+            @*<div class="col-md-4"><ul class="ulViewGameIndex"><li><img id="PlusViewGameIndex" src="~/images/plus-black-symbol.svg"></li></ul></div>*@
+
+        </div>
+    }
+}
+
+
 
 
 @section Scripts{

@@ -40,15 +40,22 @@ namespace GameConsuleWebStore.Controllers
         // GET: Products
         public async Task<IActionResult> Index()
         {
+            if (_context.Product.ToList().Count == 0)
+            {
+                ViewBag.Show = "There is no Products. Please Add By Yourself";
+                return View();
+            }
+            else
+            {
+                var PriceLst = from game in _context.Product
+                               select game.Price;
+                ViewBag.MaxPrice = PriceLst.Max();
 
-            var PriceLst = from game in _context.Product
-                           select game.Price;
-            ViewBag.MaxPrice = PriceLst.Max();
-
-            ViewBag.GamesLength = _context.Product.Count();
+                ViewBag.GamesLength = _context.Product.Count();
 
 
-            return View(await _context.Product.ToListAsync());
+                return View(await _context.Product.ToListAsync());
+            }
         }
 
         // GET: Products/Details/5
