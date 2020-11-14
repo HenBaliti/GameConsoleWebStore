@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using GameConsuleWebStore.Data;
 using GameConsuleWebStore.Models;
 
+
 namespace GameConsuleWebStore.Controllers
 {
     public class ProductsController : Controller
@@ -16,6 +17,13 @@ namespace GameConsuleWebStore.Controllers
         public ProductsController(GameConsuleWebStoreContext context)
         {
             _context = context;
+        }
+        public Dictionary<string,int> getStock(string term)
+        {
+            Dictionary<string, int> stock = new Dictionary<string, int>();
+            stock = _context.Product.ToDictionary(p => p.Name, p => p.StockUnit);
+            return stock;
+            
         }
 
         //Search *BOX*
@@ -46,6 +54,8 @@ namespace GameConsuleWebStore.Controllers
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            ViewBag.ProdIdForView = id;
+
             var product2 = await _context.Product
     .FirstOrDefaultAsync(m => m.ProductId == id);
             var StoreNameOfCurrent = product2.StoreLocation;
@@ -233,6 +243,9 @@ namespace GameConsuleWebStore.Controllers
             //    return View("Index", await products.ToListAsync());
             return View("Index", await products.ToListAsync());
         }
+        
+
 
     }
+   
 }

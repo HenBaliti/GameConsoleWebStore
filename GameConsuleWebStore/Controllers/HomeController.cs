@@ -141,6 +141,10 @@ namespace GameConsuleWebStore.Controllers
 
             return JustForYouByRecentOrders();
         }
+        public IActionResult Index2()
+        {
+            return View("~/Views/Home/About.cshtml");
+        }
 
         public IActionResult Privacy()
         {
