@@ -11,6 +11,7 @@ namespace GameConsuleWebStore.Models
         [Key]
         public int SotreAddressId { get; set; }
 
+        [Display(Name = "Store Name")]
         public string StoreName { get; set; }
         public string AddressName { get; set; }
         public double Latitude { get; set; }

@@ -1,89 +1,104 @@
 ﻿@model IEnumerable<GameConsuleWebStore.Models.User>
+@using Microsoft.AspNetCore.Http
 
 @{
     ViewData["Title"] = "Index";
 }
 
-    <form asp-action="SearchByUserType">
-        <div class="row">
-            <div class="col-md-3">
-                <p><b>Filter By User Type:</b></p>
-                <select name="TypeUserSelect" id="UserSelect">
-                    <option value="">--Choose--</option>
-                    <option value="Admin">Admin</option>
-                    <option value="User">User</option>
-                </select>
-            </div>
-
-            <div class="col-md-3">
-                <p><b>Filter By User Name:</b></p>
-                <input type="text" name="UserNamesSelect" id="UserNameSelect" placeholder="UserName" />
-            </div>
-            <div class="col-md-3">
-                <p><b>Filter By Name:</b></p>
-                <input type="text" name="NamesSelect" id="NameSelect" placeholder="Name" />
-            </div>
-            <div class="col-md-3">
-                <a href=Items/SearchByUserType>
-                    <input type="submit" value="Filter" class="btn btn-dark" />
-                </a>
-            </div>
-            </div>
+<form asp-action="SearchByUserType">
+    <div class="row">
+        <div class="col-md-3">
+            <p><b>Filter By User Type:</b></p>
+            <select name="TypeUserSelect" id="UserSelect">
+                <option value="">--Choose--</option>
+                <option value="Admin">Admin</option>
+                <option value="User">User</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <p><b>Filter By User Name:</b></p>
+            <input type="text" name="UserNamesSelect" id="UserNameSelect" placeholder="UserName" />
+        </div>
+        <div class="col-md-3">
+            <p><b>Filter By Name:</b></p>
+            <input type="text" name="NamesSelect" id="NameSelect" placeholder="Name" />
+        </div>
+        <div class="col-md-3">
+            <a href=Items/SearchByUserType>
+                <input type="submit" value="Filter" class="btn btn-dark" />
+            </a>
+        </div>
+    </div>
 </form>
+
+@{
+    if (Context.Session.GetString("UserType") == "Admin")
+    {
+        <form asp-action="SearchUser" asp-controller="Users">
+            @*SearchBox*@
+            <input name="name" id="SearchBoxInput" placeholder="Search a User" style="position: absolute; top: 3px; right: 1044px; height: 23px;" autocomplete="off" />
+            <div id="DivLoading" class="spinner-border text-dark" role="status" style=" top: 6px; right: 1074px; position: absolute; width: 18px; height: 18px;">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <button type="submit" value="Search"><img id="SearchImg" src="~/images/SearchIcon.png" style=" height: 19px; width: auto; position: absolute; top: 5px; right: 1049px;" /></button>
+        </form>
+    }
+}
+
 
 <br />
 <hr />
         <h1>Index</h1>
 
-        <p>
-            <a asp-action="Create">Create New</a>
-        </p>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Name)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.UserName)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Password)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.UserType)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Email)
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.UserName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Password)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.UserType)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Email)
-                        </td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Password)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Password)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

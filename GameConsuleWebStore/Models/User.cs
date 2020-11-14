@@ -15,11 +15,13 @@ namespace GameConsuleWebStore.Models
         public String Name { get; set; }
 
         [Required]
+        [Display(Name = "User Name")]
         public String UserName { get; set; }
 
         [StringLength(8, ErrorMessage = "{0} must be between {2}-{1} characters", MinimumLength = 6)]
         [Required]
         public String Password { get; set; }
+        [Display(Name = "User Type")]
         public String UserType { get; set; }
         //[Required]
         public String Email { get; set; }
