@@ -51,8 +51,10 @@ namespace GameConsuleWebStore.Controllers
         }
 
         // GET: Products
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string messageAlrt)
         {
+            ViewBag.AlertForDeleteProduct = messageAlrt;
+
             if (_context.Product.ToList().Count == 0)
             {
                 ViewBag.Show = "There is no Products. Please Add By Yourself";
@@ -201,9 +203,25 @@ namespace GameConsuleWebStore.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var product = await _context.Product.FindAsync(id);
-            _context.Product.Remove(product);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            List<User> usersList = _context.User.ToList();
+            List<Product> UserProducts = new List<Product>();
+            foreach (User s in usersList)
+            {
+                var UserOrders = _context.Order.Where(p => p.User.Id.ToString().Equals(s.Id.ToString()));
+                UserProducts.AddRange(_context.ProductOrder.Include(p => p.Product).Join(UserOrders, up => up.OrderId, uo => uo.Id, (up, uo) => up).Select(p => p.Product).ToList());
+
+            }
+            if (UserProducts.Contains(product))
+            {
+                return RedirectToAction("Index", "Products", new { messageAlrt = "You Cannot Remove This Product when it exist in one of the orders." });
+            }
+            else
+            {
+                _context.Product.Remove(product);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         private bool ProductExists(int id)
