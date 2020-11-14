@@ -4,65 +4,29 @@
     ViewData["Title"] = "Login";
 }
 
+<link rel="stylesheet" href="~/css/LoginCss.css" />
 
-
-<h1>Login</h1>
+<h2>Login</h2>
 <hr />
+
 <div class="row">
-    <div class="login100-pic js-tilt col-md-4" data-tilt>
-        <img src="~/images/img-01.png" alt="IMG">
+    <div class="form">
+        <form class="login-form" asp-action="Login">
+            <input type="text" name="username" placeholder="User Name">
+            <input type="password" name="password" placeholder="Password">
+            <button>Login</button>
+            <p class="message">Not registered? <a asp-action="Register">Create an account</a></p>
+            <br />
+            <div>
+                @{
+                    if (@ViewBag.AlertUser != null)
+                    {
+                        <p class="message" style="color:red">@ViewBag.AlertUser</p>
+                    }
+                }
+
+            </div>
+        </form>
     </div>
 
-    <form asp-action="Login" class="login100-form validate-form col-md-8">
-        <span class="login100-form-title">
-            Member Login
-        </span>
-
-        <div class="wrap-input100 validate-input">
-            <input class="input100" type="text" name="username" placeholder="User Name">
-            <span class="focus-input100"></span>
-            <span class="symbol-input100">
-                <i class="fa fa-envelope" aria-hidden="true"></i>
-            </span>
-        </div>
-
-        <div class="wrap-input100 validate-input" data-validate="Password is required">
-            <input class="input100" type="password" name="password" placeholder="Password">
-            <span class="focus-input100"></span>
-            <span class="symbol-input100">
-                <i class="fa fa-lock" aria-hidden="true"></i>
-            </span>
-        </div>
-        <div>
-            @{
-                if (@ViewBag.AlertUser != null)
-                {
-                    <p>@ViewBag.AlertUser</p>
-                }
-            }
-
-        </div>
-        <div class="container-login100-form-btn">
-            <button class="login100-form-btn">
-                Login
-            </button>
-        </div>
-
-        <div class="text-center p-t-12">
-            <span class="txt1">
-                Forgot
-            </span>
-            <a class="txt2" href="#">
-                Username / Password?
-            </a>
-        </div>
-        <div class="text-center">
-            <a asp-action="Register" class="txt2">
-                Create your Account
-                <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
-            </a>
-        </div>
-    </form>
 </div>
-
-
