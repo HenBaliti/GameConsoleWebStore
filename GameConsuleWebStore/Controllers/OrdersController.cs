@@ -43,6 +43,10 @@ namespace GameConsuleWebStore.Controllers
         // GET: Orders
         public async Task<IActionResult> Index()
         {
+            if (HttpContext.Session.GetString("UserType") != "Admin")
+            {
+                return RedirectToAction("Login", "Users");
+            }
             return View(await _context.Order.ToListAsync());
         }
 

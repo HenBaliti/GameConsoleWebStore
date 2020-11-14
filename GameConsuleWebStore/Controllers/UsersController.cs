@@ -94,13 +94,20 @@ namespace GameConsuleWebStore.Controllers
         // GET: Users
         public async Task<IActionResult> Index()
         {
-            return View(await _context.User.ToListAsync());
+            if (HttpContext.Session.GetString("UserType") == "Admin")
+            {
+                return View(await _context.User.ToListAsync());
+            }
+            else
+            {
+                return RedirectToAction("Login", "Users");
+            }
         }
 
         // GET: Users/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
+                if (id == null)
             {
                 return NotFound();
             }
@@ -118,6 +125,10 @@ namespace GameConsuleWebStore.Controllers
         // GET: Users/Create
         public IActionResult Create()
         {
+            if (HttpContext.Session.GetString("UserType") != "Admin")
+            {
+                return RedirectToAction("Login", "Users");
+            }
             return View();
         }
 
