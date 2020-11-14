@@ -101,9 +101,9 @@ window.onload = function () {
         gamed.append(cardDiv);
     }
 
-        document.getElementById("btnnews").addEventListener("click", function () {
-            document.getElementById("newsemail").value = "";
-            document.getElementById("subscribeSpan").innerText = "Subscribed Successfully"
-        });
+    document.getElementById("btnnews").addEventListener("click", function () {
+        document.getElementById("newsemail").value = "";
+        document.getElementById("subscribeSpan").innerText = "Subscribed Successfully"
+    });
         
 }
