@@ -280,4 +280,9 @@ img.imgViewGameIndex {
             color: #fff;
             font-weight: 600;
         }
-
+#subscribeSpan {
+    color: white;
+    margin-top: 55px;
+    position: absolute;
+    margin-left: 175px;
+}
