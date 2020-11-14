@@ -67,7 +67,7 @@ namespace GameConsuleWebStore.Controllers
                 ViewBag.GamesLength = _context.Product.Count();
 
 
-                return View(await _context.Product.ToListAsync());
+                return View(await _context.Product.Where(p=>p.StockUnit>=1).ToListAsync());
             }
         }
 

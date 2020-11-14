@@ -6,9 +6,9 @@
                 var data = term;
                 // set the color scale
 
-                var width = 1000
-                height = 450
-                margin = 60
+                var width = 1500
+                height = 900
+                margin = 0
 
                 // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
                 var radius = Math.min(width, height) / 2 - margin

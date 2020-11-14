@@ -29,7 +29,7 @@ namespace GameConsuleWebStore.Controllers
             List<Order> result = new List<Order>();
             if(HttpContext.Session.GetString("UserId")!=null)
             {
-                if (_context.Order.ToList().Count == 0)
+                if (_context.Order.Where(o=>o.User.Id==id).ToList().Count == 0)
                 {
                     ViewBag.Show = "There is no any Orders. Please wait until create a new one";
                     return View();
@@ -104,9 +104,10 @@ namespace GameConsuleWebStore.Controllers
                 items.Add(new SelectListItem { Text = it.Product.Name, Value = it.Product.ProductId.ToString(), Selected = true });
                 //View-Total-Amount-for order
                 AmountTotal += it.Quantity * it.Product.Price;
+                it.Product.StockUnit = it.Product.StockUnit - it.Quantity;
             }
 
-            ViewBag.cartItemsData = items;
+           ViewBag.cartItemsData = items;
             ViewData["ProductId"] = items;
 
             ViewBag.TotalAmountForOrder = AmountTotal;
