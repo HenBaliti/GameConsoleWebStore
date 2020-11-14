@@ -34,7 +34,7 @@ namespace GameConsuleWebStore.Controllers
             else
             {
                 //return RedirectToAction("Login", "Users");
-                return RedirectToAction("Login", "Users", new { dsf = "sasdasd" });
+                return RedirectToAction("Login", "Users", new { messageAlert = "You need to Login first." });
             }
             return View(result);
         }
@@ -46,7 +46,7 @@ namespace GameConsuleWebStore.Controllers
         {
             if (HttpContext.Session.GetString("UserType") != "Admin")
             {
-                return RedirectToAction("Login", "Users", new { dsf = "You are not admin." });
+                return RedirectToAction("Login", "Users", new { messageAlert = "You are not admin.\nTry Login Admin member first." });
             }
             return View(await _context.Order.ToListAsync());
         }
@@ -129,7 +129,7 @@ namespace GameConsuleWebStore.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Login", "Users", new { dsf = "You are not connected." });
+                    return RedirectToAction("Login", "Users", new { messageAlert = "You need to Login first for purchasing." });
                 }
                 //Adding the "many to many" function -> The OrderCntroller Creating a new Order with many products.
                 order.DateOrder = DateTime.Now;

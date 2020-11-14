@@ -19,12 +19,11 @@ namespace GameConsuleWebStore.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            List<Item> ListOfItemsPerOrder = new List<Item>();
 
             //Blocking Not Admin
             if (HttpContext.Session.GetString("UserType") != "Admin")
             {
-                return RedirectToAction("Login", "Users");
+                return RedirectToAction("Login", "Users", new { messageAlert = "You are not connected as Admin member." });
             }
             Dictionary<int, int> hash1 = new Dictionary<int, int>();
             var query = _context.Item.Include(p => p.Product).ToList();

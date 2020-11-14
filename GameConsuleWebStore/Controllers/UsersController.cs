@@ -37,11 +37,11 @@ namespace GameConsuleWebStore.Controllers
 
 
         //Login
-        public IActionResult Login(string dsf)
+        public IActionResult Login(string messageAlert)
         {
-            if (dsf != null)
+            if (messageAlert != null)
             {
-                ViewBag.AlertUser = dsf;
+                ViewBag.AlertUser = messageAlert;
             }
             return View();
         }
@@ -58,8 +58,8 @@ namespace GameConsuleWebStore.Controllers
             else //Username ore pass isnt good
             {
                 //return RedirectToAction("Eror", "Users");
-       
-                return RedirectToAction("Login", "Users");
+
+                return RedirectToAction("Login", "Users", new { messageAlert="UserName or Passsword does not exist." });
 
             }
         }
@@ -104,7 +104,7 @@ namespace GameConsuleWebStore.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Users");
+                return RedirectToAction("Login", "Users", new { messageAlert = "You are not connected as Admin." });
             }
         }
 
@@ -131,7 +131,7 @@ namespace GameConsuleWebStore.Controllers
         {
             if (HttpContext.Session.GetString("UserType") != "Admin")
             {
-                return RedirectToAction("Login", "Users");
+                return RedirectToAction("Login", "Users", new { messageAlert = "You are not connected as Admin member." });
             }
             return View();
         }
