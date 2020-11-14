@@ -77,7 +77,7 @@
                     .data(data_ready)
                     .enter()
                     .append('text')
-                    .text(function (d) { console.log(d.data.key); return d.data.key })
+                    .text(function (d) { return d.data.key })
                     .attr('transform', function (d) {
                         var pos = outerArc.centroid(d);
                         var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
