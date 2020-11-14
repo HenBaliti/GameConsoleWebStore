@@ -199,7 +199,7 @@ namespace GameConsuleWebStore.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index","Home", new { messageAlert = "Updated User Succsefully." });
             }
             return View(user);
         }

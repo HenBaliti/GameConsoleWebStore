@@ -120,8 +120,11 @@ namespace GameConsuleWebStore.Controllers
             return Json(query.ToList());
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string messageAlert)
         {
+
+            ViewBag.ShowUpdateEdit = messageAlert;
+
             //------------------YouTube Video-----------
             var random = new Random();
             List<string> YoutubeTextList = new List<string>();
