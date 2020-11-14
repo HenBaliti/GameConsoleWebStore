@@ -25,6 +25,19 @@ namespace GameConsuleWebStore.Controllers
             return stock;
             
         }
+        public Dictionary<string,int> getConsoleCount(string term)
+        {
+            Dictionary<string, int> cat = new Dictionary<string, int>();
+            foreach (Product p in _context.Product.ToList())
+            {
+                if (!cat.ContainsKey(p.ConsoleType))
+                {
+                    cat.Add(p.ConsoleType, 0);
+                }
+                cat[p.ConsoleType]++;
+            }
+            return cat;
+        }
 
         //Search *BOX*
         public IActionResult Search(string name)
