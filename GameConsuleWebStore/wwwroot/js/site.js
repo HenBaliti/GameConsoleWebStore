@@ -100,6 +100,10 @@ window.onload = function () {
         var gamed = document.getElementById("gamediv");
         gamed.append(cardDiv);
     }
-    
-    
+
+    document.getElementById("btnnews").addEventListener("click", function () {
+        document.getElementById("newsemail").value = "";
+        document.getElementById("subscribeSpan").innerText = "Subscribed Successfully"
+    });
+        
 }

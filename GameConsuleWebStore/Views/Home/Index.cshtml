@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Http
 
 @{
     ViewData["Title"] = "Home Page";
@@ -138,7 +139,7 @@
     <div class="col-md-5" id="gamediv" style="margin-top:20px"><h4>Top Companies Database</h4><br /></div>
     <div class="col-md-2"></div>
     <div class="col-md-5">
-        <h4>Last Twits About The Site</h4><br />
+        <h4>Last Tweets About The Site</h4><br />
         <a class="twitter-timeline" data-width="400" data-height="300" href="https://twitter.com/BalitiHen?ref_src=twsrc%5Etfw">Tweets by BalitiHen</a>
         <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
         <br />
@@ -189,10 +190,11 @@
                 <div class="content">
                     <marquee>SUBSCRIBE TO OUR WEBSITE</marquee>
                     <div class="input-group">
-                        <input type="email" class="form-control" placeholder="Enter your email">
+                        <input type="email" id="newsemail"class="form-control" placeholder="Enter your email">
                         <span class="input-group-btn">
-                            <button class="btn" type="submit">Subscribe Now</button>
+                            <button class="btn" id="btnnews"type="submit">Subscribe Now</button>
                         </span>
+                        <span id="subscribeSpan"></span>
                     </div>
                 </div>
             </div>
