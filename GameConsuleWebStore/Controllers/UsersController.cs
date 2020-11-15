@@ -201,17 +201,17 @@ namespace GameConsuleWebStore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,UserName,Password,UserType,Email")] User user)
         {
-            var userList = _context.User.ToList();
-
-            foreach (User u in userList)
+            if (HttpContext.Session.GetString("UserType") == "Admin")
             {
-                if (u.UserName == user.UserName)
+                string idNow = HttpContext.Session.GetString("UserId");
+                if (user.Id.ToString().Equals(idNow))
                 {
-                    return RedirectToAction("Edit", "Users", new { messageAlert = "This username is already exists." });
+                    HttpContext.Session.SetString("UserName", user.Name);
                 }
             }
-
-            HttpContext.Session.SetString("UserName", user.Name);
+            else {
+                HttpContext.Session.SetString("UserName", user.Name);
+            }
             if (id != user.Id)
             {
                 return NotFound();

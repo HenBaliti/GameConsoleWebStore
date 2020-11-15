@@ -4,16 +4,17 @@
     ViewData["Title"] = "Create";
 }
 
-@{
-    if (@ViewBag.RegisterUserNameExists != null)
-    {
-    <p style="color:red ; margin-top: 0; margin-bottom: 1rem; top: 113px; right: 490px; position: absolute; width: 706px; height: auto;">@ViewBag.RegisterUserNameExists</p>
-    }
-}
 
 <h2>Register - User</h2>
 
 <hr />
+<br />
+@{
+    if (@ViewBag.RegisterUserNameExists != null)
+    {
+        <p style="color:red ">@ViewBag.RegisterUserNameExists</p>
+    }
+}
 <div class="row">
 
     <div class="login100-pic js-tilt col-md-4" data-tilt>
