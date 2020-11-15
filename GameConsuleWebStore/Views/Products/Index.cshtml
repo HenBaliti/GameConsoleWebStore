@@ -5,8 +5,10 @@
 @{
     ViewData["Title"] = "Index";
 }
-<div class="row"><ul>@ViewBag.AlertForDeleteProduct</ul></div>
-<div class="row"><ul></ul></div>
+
+@{
+<p style="color:red; text-align:center">@ViewBag.AlertForDeleteProduct</p>
+}
 
 @{var counter = 1; }
 
@@ -15,7 +17,7 @@
     {
         if (Context.Session.GetString("UserType") == "Admin")
         {
-            <p>@ViewBag.Show</p>
+            <p style="color:red; text-align:center">@ViewBag.Show</p>
             <div class="col-md-4">
                 <div class="box">
                     <div class="imageContainer">
@@ -34,7 +36,7 @@
         }
         else
         {
-            <p>There is no products. You Are not admin.</p>
+            <p style="text-align:center; color:red">There is no products. You Are not admin.</p>
         }
     }
     else

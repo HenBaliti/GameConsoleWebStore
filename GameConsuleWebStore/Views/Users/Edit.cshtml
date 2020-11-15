@@ -5,6 +5,13 @@
     ViewData["Title"] = "Edit";
 }
 
+@{
+    if (@ViewBag.EditUserNameExists != null)
+    {
+        <p style="color:red ; margin-top: 0; margin-bottom: 1rem; top: 156px; right: 1010px; position: absolute; width: 477px; height: auto;">@ViewBag.EditUserNameExists</p>
+    }
+}
+
 <h2>Edit</h2>
 
 <h4>User</h4>

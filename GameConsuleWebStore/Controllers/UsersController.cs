@@ -59,7 +59,7 @@ namespace GameConsuleWebStore.Controllers
             {
                 //return RedirectToAction("Eror", "Users");
 
-                return RedirectToAction("Login", "Users", new { messageAlert="UserName or Passsword does not exist." });
+                return RedirectToAction("Login", "Users", new { messageAlert= "Username or Password was incorrect. Please try again." });
 
             }
         }
@@ -69,14 +69,26 @@ namespace GameConsuleWebStore.Controllers
 
 
         //Register
-        public IActionResult Register()
+        public IActionResult Register(string messageAlert)
         {
+            ViewBag.RegisterUserNameExists = messageAlert;
+
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Register([Bind("Name,UserName,Password,UserType,Email")] User user)
         {
+            var userList = _context.User.ToList();
+
+            foreach (User u in userList)
+            {
+                if (u.UserName == user.UserName)
+                {
+                    return RedirectToAction("Register", "Users", new { messageAlert = "This username is already exists." });
+                }
+            }
+
             user.UserType = "User";
             _context.Add(user);
             await _context.SaveChangesAsync();
@@ -127,8 +139,10 @@ namespace GameConsuleWebStore.Controllers
         }
 
         // GET: Users/Create
-        public IActionResult Create()
+        public IActionResult Create(string messageAlert)
         {
+            ViewBag.CreateUserNameExists = messageAlert;
+
             if (HttpContext.Session.GetString("UserType") != "Admin")
             {
                 return RedirectToAction("Login", "Users", new { messageAlert = "You are not connected as Admin member." });
@@ -143,18 +157,30 @@ namespace GameConsuleWebStore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,UserName,Password,UserType,Email")] User user)
         {
+            var userList = _context.User.ToList();
+
+            foreach(User u in userList)
+            {
+                if(u.UserName == user.UserName)
+                {
+                    return RedirectToAction("Create", "Users", new { messageAlert = "This username is already exists. Please choose another username." });
+                }
+            }
             if (ModelState.IsValid)
             {
                 _context.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+
             return View(user);
         }
 
         // GET: Users/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id, string messageAlert)
         {
+            ViewBag.EditUserNameExists = messageAlert;
             if (id == null)
             {
                 return NotFound();
@@ -175,6 +201,16 @@ namespace GameConsuleWebStore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,UserName,Password,UserType,Email")] User user)
         {
+            var userList = _context.User.ToList();
+
+            foreach (User u in userList)
+            {
+                if (u.UserName == user.UserName)
+                {
+                    return RedirectToAction("Edit", "Users", new { messageAlert = "This username is already exists." });
+                }
+            }
+
             HttpContext.Session.SetString("UserName", user.Name);
             if (id != user.Id)
             {
@@ -199,7 +235,7 @@ namespace GameConsuleWebStore.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Index","Home", new { messageAlert = "Updated User Succsefully." });
+                return RedirectToAction("Index","Home", new { messageAlert = "Updated User Succsefully!" });
             }
             return View(user);
         }
