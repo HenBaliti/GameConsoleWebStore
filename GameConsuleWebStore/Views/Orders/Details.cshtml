@@ -5,6 +5,12 @@
 @{
     ViewData["Title"] = "Details";
 }
+@{ 
+    if(@ViewBag.AlertSuccesful != null)
+    {
+        <div><p style="color:green">@ViewBag.AlertSuccesful</p></div>
+    }
+}
 
 <h1>Details</h1>
 

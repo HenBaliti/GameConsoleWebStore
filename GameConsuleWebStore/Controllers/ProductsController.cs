@@ -21,7 +21,22 @@ namespace GameConsuleWebStore.Controllers
         public Dictionary<string,int> getStock(string term)
         {
             Dictionary<string, int> stock = new Dictionary<string, int>();
-            stock = _context.Product.ToDictionary(p => p.Name, p => p.StockUnit);
+            //stock = _context.Product.ToDictionary(p => p.Name, p => p.StockUnit);
+            var innerJoinQuery =
+from item in _context.Item
+join order in _context.Order on item.Order.Id equals order.Id
+select new { ProductName = item.Product.Name, QuantityOfProduct = item.Quantity };
+            foreach(var s in innerJoinQuery)
+            {
+                if (stock.ContainsKey(s.ProductName))
+                {
+                    stock[s.ProductName] = stock[s.ProductName] + s.QuantityOfProduct;
+                }
+                else
+                {
+                    stock.Add(s.ProductName, s.QuantityOfProduct);
+                }
+            }
             return stock;
             
         }
