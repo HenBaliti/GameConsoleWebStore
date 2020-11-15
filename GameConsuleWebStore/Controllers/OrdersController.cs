@@ -60,9 +60,9 @@ namespace GameConsuleWebStore.Controllers
         }
 
         // GET: Orders/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id,string messageAlert)
         {
-
+            ViewBag.AlertSuccesful = messageAlert;
 
             if (id == null)
             {
@@ -93,6 +93,12 @@ namespace GameConsuleWebStore.Controllers
 
         public IActionResult Create()
         {
+            string messageForCreating="";
+            if (HttpContext.Session.GetString("UserId") == null)
+            {
+                messageForCreating = "You Need To Login For Purchasing On Our Site.";
+            }
+            ViewBag.AlertForCreating = messageForCreating;
             List<Item> itt = GameConsuleWebStore.Controllers.ShoppingCartController.cartTemp;
             List<SelectListItem> items = new List<SelectListItem>();
 
@@ -162,7 +168,7 @@ namespace GameConsuleWebStore.Controllers
                 HttpContext.Session.Remove("CartNumOfItems");
 
 
-                return RedirectToAction("Details", new { id = order.Id });
+                return RedirectToAction("Details", new { id = order.Id , messageAlert ="Order Succesfully!" });
             }
             return View(order);
         }
