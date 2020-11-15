@@ -134,7 +134,7 @@ namespace GameConsuleWebStore.Controllers
             YoutubeEmbedList.Add("https://www.youtube.com/embed/bH1lHCirCGI");
             YoutubeTextList.Add("Official Call of Duty®: Modern Warfare®");
             YoutubeEmbedList.Add("https://www.youtube.com/embed/s7qB4IMJicc");
-            YoutubeTextList.Add("ASSASSIN'S CREED ODYSSEY Official Trailer");
+            YoutubeTextList.Add("ASSASSIN'S CREED Official Trailer");
             int index = random.Next(YoutubeEmbedList.Count);
             string EmbedYoutube = YoutubeEmbedList[index];
             string TextYoutube = YoutubeTextList[index];
