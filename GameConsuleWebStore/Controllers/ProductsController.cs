@@ -72,7 +72,7 @@ select new { ProductName = item.Product.Name, QuantityOfProduct = item.Quantity 
 
             if (_context.Product.ToList().Count == 0)
             {
-                ViewBag.Show = "There is no Products. Please Add By Yourself";
+                ViewBag.Show = "There is no products. Please Add By Yourself";
                 return View();
             }
             else
@@ -229,7 +229,7 @@ select new { ProductName = item.Product.Name, QuantityOfProduct = item.Quantity 
             }
             if (UserProducts.Contains(product))
             {
-                return RedirectToAction("Index", "Products", new { messageAlrt = "You Cannot Remove This Product when it exist in one of the orders." });
+                return RedirectToAction("Index", "Products", new { messageAlrt = "You cannot remove this product. It already exists in an order" });
             }
             else
             {
