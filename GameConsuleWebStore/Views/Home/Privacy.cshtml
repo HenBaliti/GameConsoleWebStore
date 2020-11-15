@@ -3,4 +3,20 @@
 }
 <h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<div id="PrivacyDiv">Use this page to detail your site's privacy policy.</div>
+
+
+
+<canvas id="myCanvas" width="600" height="100" style="">
+</canvas>
+
+@section Scripts{
+
+    <script>
+        var c = document.getElementById("myCanvas");
+        var ctx = c.getContext("2d");
+        ctx.font = "30px Arial";
+        ctx.strokeText("all right reserved to their respective owners", 10, 50);
+    </script>
+
+}
