@@ -2,21 +2,21 @@
 Game Console Web Store - Web project during my second year of the degree using ASP.NET , HTML , CSS , JQUERY , JavaScript , C# , Entity Framework.
 
 
-1.Key Features
+1. Key Features
 
-2.Admin interface - REST based system, see your most viewed games, customers order locations and how the ML algorithm connected the products.
+2. Admin interface - REST based system, see your most viewed games, customers order locations and how the ML algorithm connected the products.
 
-3.Recommendation system powerd by hashmap algoritem and previous orders.
+3. Recommendation system powerd by hashmap algoritem and previous orders.
 
-4.Integrated with Twitter, GoogleMaps and IGDB
+4. Integrated with Twitter, GoogleMaps and IGDB
 
-5.Beautiful and mobile-friendly interface
+5. Beautiful and mobile-friendly interface
 
-6.Offers the customer a products by his previous orders and games he bought.
+6. Offers the customer a products by his previous orders and games he bought.
 
-7.Shopping Cart system
+7. Shopping Cart system
 
-8.GameConsoleWebStore uses a number of open source projects to work properly:
+8. GameConsoleWebStore uses a number of open source projects to work properly:
 
 ASP.Net Core - is a free and open-source web framework
 IGBD - our source for images, descreption, videos of games.
