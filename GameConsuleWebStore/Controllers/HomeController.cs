@@ -181,7 +181,7 @@ namespace GameConsuleWebStore.Controllers
     .OrderByDescending(z => z.Value);
 
                     //None of them
-                    if (CategoryCounter == null && CategoryCounter == null)
+                    if (ConsuleCounter == null && CategoryCounter == null)
                     {
                         ViewBag.ForYou = null;
                         return View("Index");
