@@ -12,6 +12,8 @@ Game Console Web Store - Web project during my second year of the degree using A
 
 5. Beautiful and mobile-friendly interface.
 
+6. Login System with multy options for users and dashboard for admin.
+
 7. Shopping Cart system. 
 
 8. GameConsoleWebStore uses a number of open source projects to work properly:
